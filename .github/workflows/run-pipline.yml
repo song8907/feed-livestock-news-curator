@@ -16,7 +16,7 @@ on:
         required: false
         default: '수동 실행 메모 없음'
   schedule:
-    - cron: "1 13 * * 0"  # 매주 일요일 22:01 KST = 일요일 13:01 UTC
+    - cron: "0 9 * * 0"  # 매주 일요일 18:01 KST = 일요일 9:01 UTC
 
 concurrency:
   group: ${{ github.workflow }}
