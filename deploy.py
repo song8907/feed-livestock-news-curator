@@ -41,6 +41,17 @@ def _format_week_label_kr(week_label: str) -> str:
     return f"{monday.year}년 {monday.month}월 {week_of_month}주차"
 
 
+def _format_week_label_kr_short(week_label: str) -> str:
+    """"2026-31"(ISO 연도-주차) -> "7월 4주차". 연도 없이 월/주차만 필요한 곳(그래프 x축 등)에 사용.
+    형식이 예상과 다르면 원본 그대로 반환."""
+    try:
+        monday = datetime.strptime(f"{week_label}-1", "%G-%V-%u")
+    except ValueError:
+        return week_label
+    week_of_month = ((monday.day - 1) // 7) + 1
+    return f"{monday.month}월 {week_of_month}주차"
+
+
 def _format_issue_html(item: dict, rank: int | None = None, accent: str = ACCENT_DOMESTIC) -> str:
     """
     이슈 하나 분량의 HTML 카드.
@@ -368,7 +379,7 @@ def render_category_trend_chart(trend_entries: list[dict], axis: str) -> bytes |
         plt.rcParams["axes.unicode_minus"] = False
 
         categories = sorted(CATEGORY_KEYWORDS.keys())
-        week_labels = [e["week_label"] for e in trend_entries]
+        week_labels = [_format_week_label_kr_short(e["week_label"]) for e in trend_entries]
         colors = plt.cm.tab10.colors
 
         fig, ax_plot = plt.subplots(figsize=(9, 4), dpi=120)
