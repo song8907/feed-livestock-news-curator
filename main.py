@@ -49,7 +49,7 @@ COLLECTED_ARTIFACT_PATH = "collected_articles.json"
 # --- 파이프라인 시간 예산 체크포인트 (각 진입점 자기 시작 기준 절대 분) ---
 # run_collect()는 GDELT_DEADLINE_MINUTES만, run_process()는 나머지 넷을 씀 -
 # 둘 다 자기 진입점의 pipeline_start 기준. 값은 실측 보고 조정할 것.
-GDELT_DEADLINE_MINUTES = 350          # 5:50 - job1: GDELT 수집(WATT/네이버 포함, 남은 10분은 정리+artifact 저장용)
+GDELT_DEADLINE_MINUTES = 320          # 5:20 - job1: GDELT 수집(WATT/네이버 포함). 여유 40분 = python 시작 전 셋업 step(체크아웃/툴 정리/pip/playwright) + 마지막 요청 timeout + artifact 업로드
 GROUPING_DEADLINE_MINUTES = 120      # 2:00 - job2: 임베딩 로드 + 이슈 그룹핑(1~3차, 필터링 전 원본 전체 대상)
 RELEVANCE_DEADLINE_MINUTES = 220      # 3:40 - job2: [5] 관련성 필터 (그룹 대표 1건씩만 판단)
 RECATEGORIZE_DEADLINE_MINUTES = 240   # 4:00 - job2: [6] 카테고리 재분류 (별도 체크포인트 - [5]가 늦어도 20분은 보장됨)
