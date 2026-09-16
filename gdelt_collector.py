@@ -21,6 +21,35 @@ import keyword_source
 from gdeltdoc import GdeltDoc, Filters
 from gdeltdoc.errors import RateLimitError
 
+# --- 요청 타임아웃 ---
+# gdeltdoc은 requests.get()을 timeout 없이 호출함 -> GDELT가 응답을 매달면 무한 대기,
+# 파이썬 쪽 deadline 체크가 영영 안 돌아서 job 360분 강제 취소로 이어짐.
+# gdeltdoc.api_client 모듈 안의 requests 참조만 교체(네이버 등 다른 모듈엔 영향 없음).
+REQUEST_CONNECT_TIMEOUT_SECONDS = 30
+REQUEST_READ_TIMEOUT_SECONDS = 120
+
+try:
+    import gdeltdoc.api_client as _gdelt_api_client
+
+    class _RequestsWithTimeout:
+        """requests 모듈 대리 객체 - get()에만 기본 timeout 주입, 나머지 속성은 원본 그대로."""
+
+        def __getattr__(self, name):
+            return getattr(requests, name)
+
+        @staticmethod
+        def get(*args, **kwargs):
+            kwargs.setdefault("timeout", (REQUEST_CONNECT_TIMEOUT_SECONDS, REQUEST_READ_TIMEOUT_SECONDS))
+            return requests.get(*args, **kwargs)
+
+    if getattr(_gdelt_api_client, "requests", None) is requests:
+        _gdelt_api_client.requests = _RequestsWithTimeout()
+    else:
+        print("[gdelt] 🟡 주의 - gdeltdoc 내부 구조가 예상과 달라 요청 timeout 주입 실패 "
+              "(gdeltdoc 버전 확인 필요)")
+except ImportError:
+    print("[gdelt] 🟡 주의 - gdeltdoc.api_client 모듈 없음 - 요청 timeout 주입 실패 (gdeltdoc 버전 확인 필요)")
+
 # UA 미기재 시 429 잦음(gdeltdoc 이슈#22) - requests 기본 헤더 전역 오버라이드.
 _GDELT_USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -317,6 +346,34 @@ OUTER_RETRY_PASSES = 2  # 키워드 단위 외부 재시도 라운드 수(총 �
 OUTER_RETRY_WAIT_SECONDS = 90
 
 
+# --- 시간 예산(deadline) 전역 공유 ---
+# collect()가 시작할 때 설정. _call_with_retry 내부 대기(쿨다운/백오프)와 라운드 간 대기도
+# 이 마감을 넘기지 않게 함 - 배치 사이에서만 체크하면 429 백오프 한 번에 15분씩 넘어가 버림.
+_active_deadline: float | None = None
+
+
+class BudgetExceededError(Exception):
+    """시간 예산 마감에 도달해 요청/대기를 중단함(ValueError 아님 - 학습형 스킵 대상 아님)."""
+
+
+def _seconds_left() -> float:
+    if _active_deadline is None:
+        return float("inf")
+    return _active_deadline - time.monotonic()
+
+
+def _sleep_within_budget(seconds: float) -> bool:
+    """마감을 넘지 않는 만큼만 대기. 마감까지 전부 못 기다리면 남은 만큼 자고 False 반환."""
+    left = _seconds_left()
+    if left <= 0:
+        return False
+    if seconds <= left:
+        time.sleep(seconds)
+        return True
+    time.sleep(left)
+    return False
+
+
 # --- 전역(프로세스 공유) 쿨다운: 429 시 이후 모든 호출이 같은 차단 구간 공유 ---
 _cooldown_until = 0.0
 _cooldown_lock = threading.Lock()
@@ -327,6 +384,9 @@ def _wait_for_cooldown():
     with _cooldown_lock:
         remaining = _cooldown_until - time.time()
     if remaining > 0:
+        if remaining >= _seconds_left():
+            raise BudgetExceededError(
+                f"전역 쿨다운 {remaining:.0f}초가 시간 예산 마감({max(_seconds_left(), 0):.0f}초 남음)을 넘김")
         print(f"[gdelt] 전역 쿨다운 중 - {remaining:.0f}초 남음, 대기")
         time.sleep(remaining)
 
@@ -373,6 +433,8 @@ def _call_with_retry(func, *args, label: str = "", **kwargs):
     network_attempt = 0
 
     while True:
+        if _seconds_left() <= 0:
+            raise BudgetExceededError(f"{label} - 시간 예산 마감 도달, 요청 생략")
         _wait_for_cooldown()
         try:
             return func(*args, **kwargs)
@@ -381,19 +443,26 @@ def _call_with_retry(func, *args, label: str = "", **kwargs):
                 raise
             server_wait = _parse_retry_after(getattr(e, "response", None))
             wait = server_wait if server_wait is not None else BACKOFF_BASE_SECONDS * (2 ** rate_limit_attempt)
+            if wait >= _seconds_left():
+                raise BudgetExceededError(
+                    f"{label} - 429 백오프 {wait:.0f}초가 시간 예산 마감"
+                    f"({max(_seconds_left(), 0):.0f}초 남음)을 넘김 - 재시도 중단") from e
             rate_limit_attempt += 1
             now_str = datetime.now(timezone.utc).isoformat(timespec="seconds")
             print(f"[gdelt] {now_str} - {label} - 429 rate limit - {wait:.0f}초 전역 쿨다운 설정 "
                   f"({rate_limit_attempt}/{MAX_RETRIES})")
             _trigger_cooldown(wait)
-        except (requests.exceptions.ConnectTimeout, requests.exceptions.ConnectionError):
+        except (requests.exceptions.Timeout, requests.exceptions.ConnectionError,
+                requests.exceptions.ChunkedEncodingError) as e:
+            # Timeout = ConnectTimeout + ReadTimeout(응답 매달림)
             if network_attempt >= NETWORK_ERROR_MAX_RETRIES:
                 raise
             network_attempt += 1
-            print(f"[gdelt] {label} - 접속 실패(ConnectTimeout 등) - "
+            print(f"[gdelt] {label} - 접속/응답 실패({type(e).__name__}) - "
                   f"{NETWORK_ERROR_WAIT_SECONDS}초 대기 후 재시도 "
                   f"({network_attempt}/{NETWORK_ERROR_MAX_RETRIES})")
-            time.sleep(NETWORK_ERROR_WAIT_SECONDS)
+            if not _sleep_within_budget(NETWORK_ERROR_WAIT_SECONDS):
+                raise BudgetExceededError(f"{label} - 네트워크 재시도 대기 중 시간 예산 마감 도달") from e
 
 
 def _parse_seendate(raw: str) -> datetime:
@@ -473,6 +542,10 @@ def _collect_articles_for_keyword(gd: "GdeltDoc", keyword: str) -> tuple[bool, l
               f"{len(keyword_articles)}건 수집 완료{fp_note}")
         return True, keyword_articles, None
 
+    except BudgetExceededError as e:
+        print(f"[gdelt] 🟡 주의 - '{keyword}' 시간 예산 마감으로 중단: {e}")
+        return False, [], f"{type(e).__name__}: {e}"
+
     except ValueError as e:
         # 쿼리 자체 거부(확정적 실패) - 학습형 스킵 목록 대상으로 기록.
         print(f"[gdelt] 🟡 주의 [GD-05] - '{keyword}' article_search 실패(쿼리 자체 거부로 추정 - "
@@ -542,6 +615,10 @@ def _collect_articles_for_keywords(gd: "GdeltDoc", keywords: list[str]) -> tuple
             print(f"  - '{kw}': {count}건")
         return True, combined_articles
 
+    except BudgetExceededError as e:
+        print(f"[gdelt] 🟡 주의 - '{label}' 시간 예산 마감으로 중단: {e}")
+        return False, []
+
     except ValueError as e:
         # 쿼리 자체 거부는 재시도해도 100% 같은 이유로 실패(OR 결합에 문제
         # 키워드가 섞여있는 한) - 재시도 대신 즉시 키워드별 개별 요청으로 전환.
@@ -562,11 +639,13 @@ def _collect_articles_individually(gd: "GdeltDoc", keywords: list[str]) -> tuple
     all_articles = []
     any_success = False
     for keyword in keywords:
+        if _seconds_left() <= 0:
+            break
         success, keyword_articles, _reason = _collect_articles_for_keyword(gd, keyword)
         if success:
             any_success = True
             all_articles.extend(keyword_articles)
-        time.sleep(REQUEST_INTERVAL)
+        _sleep_within_budget(REQUEST_INTERVAL)
     return any_success, all_articles
 
 
@@ -643,8 +722,10 @@ def collect(keywords: list[str] | None = None, deadline: float | None = None) ->
     같은 배치로 외부 재시도, 최종 실패해야 개별 전환. deadline 초과 시 남은
     키워드는 이번 실행 건너뜀.
     """
+    global _active_deadline
     if deadline is None:
         deadline = time.monotonic() + TIME_BUDGET_SECONDS
+    _active_deadline = deadline
 
     gd = GdeltDoc()
     target_keywords = keywords if keywords is not None else keyword_source.get_keywords("en", KEYWORDS_EN)
@@ -711,7 +792,7 @@ def collect(keywords: list[str] | None = None, deadline: float | None = None) ->
         else:
             all_articles.extend(batch_articles)
             pending_individual.extend(_handle_batch_crowding(batch, batch_articles))
-        time.sleep(REQUEST_INTERVAL)
+        _sleep_within_budget(REQUEST_INTERVAL)
 
     # --- 1-보조단계: 배치 요청 자체가 실패한 것들을 배치 그대로 재시도 ---
     if budget_exceeded:
@@ -733,7 +814,7 @@ def collect(keywords: list[str] | None = None, deadline: float | None = None) ->
         print(f"[gdelt] --- 배치 재시도 라운드 {round_num}/{OUTER_RETRY_PASSES} - "
               f"이전 라운드 실패 배치 {len(batch_round)}개 ---")
         print(f"[gdelt] 라운드 간 안전 대기 {OUTER_RETRY_WAIT_SECONDS}초")
-        time.sleep(OUTER_RETRY_WAIT_SECONDS)
+        _sleep_within_budget(OUTER_RETRY_WAIT_SECONDS)
 
         still_failed_batches = []
         for batch_idx2, batch in enumerate(batch_round):
@@ -751,7 +832,7 @@ def collect(keywords: list[str] | None = None, deadline: float | None = None) ->
                 pending_individual.extend(_handle_batch_crowding(batch, batch_articles))
             else:
                 still_failed_batches.append(batch)
-            time.sleep(REQUEST_INTERVAL)
+            _sleep_within_budget(REQUEST_INTERVAL)
         batch_round = still_failed_batches
 
     if batch_round:
@@ -775,8 +856,14 @@ def collect(keywords: list[str] | None = None, deadline: float | None = None) ->
                 break
             print(f"[gdelt] --- 기사 수집 외부 재시도 라운드 {round_num}/{OUTER_RETRY_PASSES} - "
                   f"이전 라운드 실패 키워드 {len(failed_keywords)}개: {failed_keywords} ---")
+            if _seconds_left() <= 0:
+                skipped_due_to_budget.extend(failed_keywords)
+                print(f"[gdelt] 🟡 주의 - 시간 예산 소진 - 개별 재시도 라운드 생략"
+                      f"(키워드 {len(failed_keywords)}개는 이번 실행에서 건너뜀)")
+                failed_keywords = []
+                break
             print(f"[gdelt] 라운드 간 안전 대기 {OUTER_RETRY_WAIT_SECONDS}초")
-            time.sleep(OUTER_RETRY_WAIT_SECONDS)
+            _sleep_within_budget(OUTER_RETRY_WAIT_SECONDS)
             round_keywords = failed_keywords
 
         if not round_keywords:
@@ -803,7 +890,7 @@ def collect(keywords: list[str] | None = None, deadline: float | None = None) ->
             else:
                 failed_keywords.append(keyword)
                 failure_reasons[keyword] = reason or "사유 불명"
-            time.sleep(REQUEST_INTERVAL)
+            _sleep_within_budget(REQUEST_INTERVAL)
 
         if not round_keywords:
             break
@@ -822,4 +909,5 @@ def collect(keywords: list[str] | None = None, deadline: float | None = None) ->
     _update_skip_state_after_run()
     _update_crowding_state_after_run()
 
+    _active_deadline = None
     return all_articles, timeline_by_keyword
