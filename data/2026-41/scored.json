@@ -1,0 +1,126 @@
+{
+  "generated_at": "2026-10-11T20:53:47.345941+00:00",
+  "domestic": [],
+  "international": [
+    {
+      "issue_score": 1.4,
+      "mention_count": 2,
+      "raw_mention_count": 2,
+      "titles": [
+        "Thailand asks firms to cut egg exports after flood losses",
+        "Thailand asks firms to cut egg exports after flood losses"
+      ],
+      "urls": [
+        "https://wtvbam.com/2026/10/06/thailand-asks-firms-to-cut-egg-exports-after-flood-losses/",
+        "https://wiky.com/2026/10/06/thailand-asks-firms-to-cut-egg-exports-after-flood-losses/"
+      ],
+      "press_list": [
+        "wiky.com",
+        "wtvbam.com"
+      ],
+      "cross_axis_partner_url": null,
+      "cross_axis_partner": null,
+      "generated_title": "태국, 홍수 피해로 계란 수출 30~50% 감축·2026년 12월까지 제한",
+      "summary": "태국 정부가 홍수 피해로 계란 공급이 타격을 입자, 2026년 12월까지 계란 수출을 30~50% 감축하도록 기업에 요청했다. Chachoengsao 지역 홍수로 300만 마리 이상의 닭이 폐사했으며, 정부는 미피해 지역에서 계란 공급을 위해 긴급 조사하고 있다. 관련 부처는 다른 기관과 협력해 내수 시장 안정을 도모하고 있다.",
+      "summary_skipped_reason": null
+    },
+    {
+      "issue_score": 1.0,
+      "mention_count": 1,
+      "raw_mention_count": 1,
+      "titles": [
+        "破壁垒 、 严整治 、 固长效 黑龙江省大庆市市场监管局交叉互查筑牢肉制品安全防线"
+      ],
+      "urls": [
+        "https://baijiahao.baidu.com/s?id=1878642503330280643"
+      ],
+      "press_list": [
+        "baijiahao.baidu.com"
+      ],
+      "cross_axis_partner_url": null,
+      "cross_axis_partner": null,
+      "generated_title": "장벽 해소·엄정 정비·장기 효과 다지기… 헤이룽장성 다칭시 시장감독관리국, 교차 상호 점검으로 육가공품 안전 방어선 견고히",
+      "summary": null,
+      "summary_skipped_reason": "수집 데이터 부족"
+    },
+    {
+      "issue_score": 0.7,
+      "mention_count": 1,
+      "raw_mention_count": 1,
+      "titles": [
+        "Lista primera etapa de Expo Coahuila ; se estrenará con el Rodeo Saltillo 2026"
+      ],
+      "urls": [
+        "https://elheraldodesaltillo.mx/2026/10/07/lista-primera-etapa-de-expo-coahuila-se-estrenara-con-el-rodeo-saltillo-2026/"
+      ],
+      "press_list": [
+        "elheraldodesaltillo.mx"
+      ],
+      "cross_axis_partner_url": null,
+      "cross_axis_partner": null,
+      "generated_title": "멕시코 코아우이라주, 엑스포 코아위라 (Expo Coahuila) 1 단계 2026 년 10 월 로데오 살티요 (Rodeo Saltillo) 와 함께 개장",
+      "summary": "멕시코 코아우이라주 (Coahuila) 의 엑스포 코아위라 (Expo Coahuila) 1 단계가 2026 년 10 월 15 일부터 18 일까지 열리는 제 7 회 로데오 살티요 (Rodeo Saltillo) 와 함께 개장한다. 이번 행사에서는 살티요 박람회 (Saltillo feria) 옛 부지에 새로 지어진 시설을 활용해 쇼, 전시, 컨벤션용 새로운 공간을 오픈하며, 이는 도시의 관광 및 엔터테인먼트 인프라 확장 프로젝트의 일환이다.",
+      "summary_skipped_reason": null
+    }
+  ],
+  "domestic_by_category": {},
+  "international_by_category": {
+    "무역/관세 이슈": [
+      {
+        "issue_score": 1.4,
+        "mention_count": 2,
+        "raw_mention_count": 2,
+        "titles": [
+          "Thailand asks firms to cut egg exports after flood losses",
+          "Thailand asks firms to cut egg exports after flood losses"
+        ],
+        "urls": [
+          "https://wtvbam.com/2026/10/06/thailand-asks-firms-to-cut-egg-exports-after-flood-losses/",
+          "https://wiky.com/2026/10/06/thailand-asks-firms-to-cut-egg-exports-after-flood-losses/"
+        ],
+        "press_list": [
+          "wiky.com",
+          "wtvbam.com"
+        ],
+        "cross_axis_partner_url": null,
+        "cross_axis_partner": null,
+        "category": "무역/관세 이슈",
+        "generated_title": "태국, 홍수로 인한 계란 수출 축소를 요청하며 30~50% 감축",
+        "summary": "태국은 2026년 12월까지 계란 수출을 30%에서 50% 감춐하라고 기업에게 요청했다. 이는 방콕에서 인근인 차추엔소아 주의 홍수로 인해 약 300만 마리의 닭이 사망한 것으로, 수급 부족을 해소하기 위한 조치다. 니루아트 내정부는 영향을 받지 않은 지역의 계란을 조사해 소매업체에 공급하고 있다.",
+        "summary_skipped_reason": null
+      }
+    ],
+    "정부·제도 용어": [
+      {
+        "issue_score": 1.0,
+        "mention_count": 1,
+        "raw_mention_count": 1,
+        "titles": [
+          "破壁垒 、 严整治 、 固长效 黑龙江省大庆市市场监管局交叉互查筑牢肉制品安全防线"
+        ],
+        "urls": [
+          "https://baijiahao.baidu.com/s?id=1878642503330280643"
+        ],
+        "press_list": [
+          "baijiahao.baidu.com"
+        ],
+        "cross_axis_partner_url": null,
+        "cross_axis_partner": null,
+        "category": "정부·제도 용어",
+        "generated_title": "흑룡성 대저 지역시장 감독국, 닭육품 안전 방어선 확보 위해 허술함 제거·엄정 관리·지속 가능한 효과 확보 추진",
+        "summary": null,
+        "summary_skipped_reason": "수집 데이터 부족"
+      }
+    ]
+  },
+  "category_distribution": {
+    "국내": {},
+    "해외": {
+      "무역/관세 이슈": 2,
+      "정부·제도 용어": 1,
+      "기타": 1
+    }
+  },
+  "gdelt_timeline": {},
+  "failed_sources": []
+}
