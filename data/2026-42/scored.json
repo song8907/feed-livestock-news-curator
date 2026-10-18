@@ -1,0 +1,743 @@
+{
+  "generated_at": "2026-10-18T20:52:54.795705+00:00",
+  "domestic": [
+    {
+      "issue_score": 2.0,
+      "mention_count": 2,
+      "raw_mention_count": 2,
+      "titles": [
+        "중동發 곡물가 상승에 사료값  불똥 … 밥상물가 위태롭다 [ 농어촌이 미래다 - 그린 라이프 ] ",
+        "  국산 건초로 전량 대체 땐 年 5876억 아껴  [ 농어촌이 미래다 - 그린 라이프 ] "
+      ],
+      "urls": [
+        "https://www.segye.com:443/newsView/20261014527242",
+        "https://www.segye.com:443/newsView/20261014527241"
+      ],
+      "press_list": [
+        "segye.com:443"
+      ],
+      "cross_axis_partner_url": null,
+      "cross_axis_partner": null,
+      "generated_title": "중동전쟁·국제 곡물가 상승에 배합사료값 33개월 최고치…축산물 물가 압박",
+      "summary": "중동전쟁 발발 이후 5개월 연속 상승한 국제 곡물가격과 수입 원료 80% 의존 구조로, 지난 8월 국내 배합사료 1kg당 평균 가격이 648원으로 33개월 만에 최고치를 기록했다. 사료비가 축산농가 경영비의 절반을 차지하는 만큼 가격 상승은 육계·삼겹살 등 축산물 가격까지 끌어올릴 우려가 있으며, 농산부산물 활용과 국산 건초 전환 등 사료비 절감 기술이 현장에서 검토되고 있다.",
+      "summary_skipped_reason": null
+    },
+    {
+      "issue_score": 1.0,
+      "mention_count": 1,
+      "raw_mention_count": 1,
+      "titles": [
+        "브라질 계란 논란에 송미령  비상시 대비 공급망 다변화해야  "
+      ],
+      "urls": [
+        "https://www.fnnews.com/news/202610171757316754"
+      ],
+      "press_list": [
+        "fnnews.com"
+      ],
+      "cross_axis_partner_url": null,
+      "cross_axis_partner": null,
+      "generated_title": "송미령 장관, 브라질 계란 수입 논란에 대응해 공급망 다변화 강조",
+      "summary": "송미령 농림축산식품부 장관은 브라질산 계란 고가 수출 논란에 대해 특정 국가 의존에서 벗어나기 위해 수입선을 다변화하고 있다고 밝혔다. 검역 및 위생 절차를 완료한 국가는 10개국이지만, 현지 가축 질병이나 수요 증가 등으로 실제 수입은 제한될 수 있다는 설명이다. 장거리 운송 비용 부담을 인정하면서도 시범 수입의 실효성을 평가하겠다고 덧붙였다.",
+      "summary_skipped_reason": null
+    },
+    {
+      "issue_score": 1.0,
+      "mention_count": 1,
+      "raw_mention_count": 1,
+      "titles": [
+        "풍력 피해 왔더니 태양광에 갇혀  열기에 소들이 죽어나가요 - 사회ㅣ한국일보"
+      ],
+      "urls": [
+        "https://www.hankookilbo.com/news/article/A2026101515210000162"
+      ],
+      "press_list": [
+        "hankookilbo.com"
+      ],
+      "cross_axis_partner_url": null,
+      "cross_axis_partner": null,
+      "generated_title": "풍력 피해 왔더니 태양광에 갇힌 축농가, 여름철 초열로 고통",
+      "summary": "전남 나주시 한 농가는 태양광 발전소가 집과 축사 가까이 들어서면서 지붕 표면 온도가 65도까지 치솟는 등 초열 피해를 입어 사람과 동물이 버티기 어려운 상황이다. 개정 법련에 따라 이격거리 상한이 200m로 제한되지만 5호 미만 주택과 드문드문 사는 농촌 외딴집은 보호 대상에서 제외돼 사각지대가 발생하고 있다.",
+      "summary_skipped_reason": null
+    }
+  ],
+  "international": [
+    {
+      "issue_score": 38.0,
+      "mention_count": 38,
+      "raw_mention_count": 38,
+      "titles": [
+        " ¿ Qué es la fiebre aftosa , la nueva enfermedad que acecha al ganado de México ? ",
+        "Sonora suspende exportación de ganado a Estados Unidos por posible fiebre aftosa",
+        "Clausuran exportación de ganado entre Sonora y Arizona por aftas en becerros",
+        "Suspenden temporalmente la exportación de ganado de Sonora a EU por sospecha de fiebre aftosa",
+        "México suspende exportación de ganado a EE . UU . por posible caso de fiebre aftosa",
+        "Emiten alerta por posible caso de fiebre aftosa en ganado mexicano",
+        " ¿ Qué es la fiebre aftosa y por qué emiten alerta por casos en ganado mexicano ? ",
+        "Reanudarán exportación de ganado ; descartan fiebre aftosa",
+        "Descartan fiebre aftosa en Sonora ; reanudan exportación de ganadoðŸŽ",
+        "Frontera con EU , en alerta por ganado mexicano",
+        "Suspenden temporalmente exportación de ganado de Sonora a EU",
+        " ¿ Por qué suspendieron la exportación de ganado de Sonora a Estados Unidos ? ",
+        "Sonora suspende exportación de ganado a EUA",
+        "México reanuda el martes exportaciones de ganado a EEUU después de descartar fiebre aftosa - Mundo",
+        "Sonora suspende la exportación de ganado a EU",
+        "Descartan fiebre aftosa en ganado",
+        "Suspenden cruce de ganado en Sonora por revisión sanitaria",
+        "Sonora suspende temporalmente exportación de ganado a EU por caso sospechoso de fiebre aftosa",
+        "Reanudan exportación de ganado a EU por Agua Prieta el 20 de octubre",
+        "Suspenden temporalmente ganaderos exportaciones a EU",
+        "Suspenden exportación de ganado ; temen fiebre aftosa",
+        "Suspenden exportación de ganado ; temen fiebre aftosa",
+        "Reanudarán exportación de ganado por Agua Prieta , Sonora , el 20 de octubre , no es fiebre aftosa",
+        " ¿ Qué es la fiebre aftosa ? Razón por la que Estados Unidos suspendió la exportación de ganado , principalmente becerros",
+        "Suspenden exportación de ganado tras detectar lesión en un becerro",
+        "Suspende Sonora exportación a EU ; sospechan fiebre aftosa",
+        "Suspenden temporalmente exportación de ganado de Sonora a EU por sospecha de fiebre aftosa",
+        "Suspende Sonora exportación a EU ; sospechan fiebre aftosa",
+        "Sonora suspende exportación de ganado a EU",
+        "Suspende temporalmente Sonora exportaciones de ganado a EU por revisión sanitaria",
+        "Suspenden temporalmente exportación de ganado sonorense por sospecha sanitaria",
+        "Por sospecha de fiebre aftosa detienen temporalmente exportación de ganado a Estados Unidos",
+        "Aftosa en ganado de Sonora no afecta a Chihuahua",
+        "Aftosa en ganado de Sonora no afecta a Chihuahua",
+        "Suspenden temporalmente ganaderos exportaciones a EU",
+        "Detectan afta en un becerro de Sonora y suspenden temporalmente exportación a EU ; Sader activa protocolos",
+        "Suspenden la exportación de ganado de Sonora a Estados Unidos por posible riesgo sanitario ( 19 : 00 h ) ",
+        "Descartan brote de fiebre aftosa en ganado que ocasionó el freno de las exportaciones en Sonora"
+      ],
+      "urls": [
+        "https://www.elfinanciero.com.mx/salud/2026/10/16/que-es-la-fiebre-aftosa-la-nueva-enfermedad-que-acecha-al-ganado-de-mexico/",
+        "https://www.sdpnoticias.com/mexico/sonora-suspende-exportacion-de-ganado-a-estados-unidos-por-posible-fiebre-aftosa/",
+        "https://www.excelsior.com.mx/nacional/clausuran-exportacion-ganado-sonora-arizona",
+        "https://tribuna.com.mx/campo/2026/10/16/suspenden-temporalmente-la-exportacion-de-ganado-de-sonora-a-eu-por-sospecha-de-fiebre-aftosa_702923/",
+        "https://aristeguinoticias.com/1610/mexico/mexico-suspende-exportacion-de-ganado-desde-sonora-a-ee-uu-por-posible-caso-de-fiebre-aftosa/",
+        "https://www.eluniversal.com.mx/nacion/emiten-alerta-por-posible-caso-de-fiebre-aftosa-en-ganado-mexicano-esperan-resultados-para-reanudar-exportaciones/",
+        "https://www.elimparcial.com/mexico/2026/10/17/que-es-la-fiebre-aftosa-y-por-que-emiten-alerta-por-casos-en-ganado-mexicano/",
+        "https://www.eldiariodechihuahua.mx/nacional/2026/oct/17/reanudaran-exportacion-de-ganado-descartan-fiebre-aftosa-848918.html",
+        "https://www.tiempo.com.mx/nacional/descartan-fiebre-aftosa-agua-prieta-sonora-reanudan-exportacion-ganado-octubre-2026/",
+        "https://horacero.com.mx/nacional/ganado-alerta-frontera-eu",
+        "https://www.eluniversal.com.mx/estados/suspenden-temporalmente-exportacion-de-ganado-de-sonora-a-eu-hay-sospecha-de-un-caso-de-fiebre-aftosa/",
+        "https://www.tvazteca.com/aztecanoticias/por-que-suspendieron-la-exportacion-ganado-sonora-a-estados-unidos/",
+        "https://www.cuartopoder.mx/nacional/sonora-suspende-exportacion-de-ganado-a-eua/594772",
+        "https://www.abc.com.py/internacionales/2026/10/18/mexico-reanuda-el-martes-exportaciones-de-ganado-a-eeuu-despues-de-descartar-fiebre-aftosa/",
+        "https://www.sinembargo.mx/4889062/mexico-suspende-la-exportacion-de-ganado-a-eu-por-deteccion-de-aftas-en-un-becerro/",
+        "https://pulsoslp.com.mx/nacional/descartan-fiebre-aftosa-en-ganado/2096989",
+        "https://www.expreso.com.mx/noticias/sonora/suspenden-cruce-de-ganado-en-sonora-por-revision-sanitaria/266566",
+        "https://www.elfinanciero.com.mx/estados/2026/10/16/sonora-suspende-temporalmente-exportacion-de-ganado-a-eu-por-caso-sospechoso-de-fiebre-aftosa/",
+        "https://laopcion.com.mx/nacional/reanudan-exportacion-de-ganado-a-eu-por-agua-prieta-el-20-de-octubre-20261017-530141.html",
+        "https://diario.mx/economia/2026/oct/16/suspenden-temporalmente-ganaderos-exportaciones-a-eu-1143757.html",
+        "https://www.razon.com.mx:443/negocios/2026/10/17/suspenden-exportacion-de-ganado-temen-fiebre-aftosa/",
+        "https://www.razon.com.mx/negocios/2026/10/17/suspenden-exportacion-de-ganado-temen-fiebre-aftosa/",
+        "https://www.eluniversal.com.mx/estados/reanudaran-exportacion-de-ganado-por-agua-prieta-sonora-el-20-de-octubre-resultados-de-laboratorio-de-senasica-descartan-fiebre-aftosa/",
+        "https://www.ejecentral.com.mx/nuestro-eje/que-es-la-fiebre-aftosa-razon-por-la-que-estados-unidos-suspendio-la-exportacion-de-ganado-principalmente-becerros",
+        "https://www.meganoticias.mx/cdmx/noticia/suspenden-exportaci%C3%B3n-de-ganado-tras-detectar-lesi%C3%B3n-en-un-becerro/779926",
+        "https://www.tiempo.com.mx/nacional/suspende-sonora-exportacion-a-eu-sospechan-fiebre-aftosa/",
+        "https://www.notigape.com/suspenden-temporalmente-exportacion-de-ganado-de-sonora-a-eu-por-sospecha-de-fiebre-aftosa/298504",
+        "https://puentelibre.mx/nacional/suspende-sonora-exportacion-a-eu-sospechan-fiebre-aftosa/",
+        "https://www.notisistema.com/noticias/sonora-suspende-temporalmente-exportacion-de-ganado-a-eu/",
+        "https://vanguardia.com.mx/noticias/suspende-temporalmente-sonora-exportaciones-de-ganado-a-eu-por-revision-sanitaria-NP24189859",
+        "https://eldiariodesonora.com.mx/nogales/2026/10/16/suspenden-temporalmente-exportacion-ganado-sonorense-sospecha-sanitaria.html",
+        "https://intoleranciadiario.com/articles/nacional/2026/10/16/1059217-por-sospecha-de-fiebre-aftosa-detienen-temporalmente-exportacion-de-ganado-a-estados-unidos.html",
+        "https://diario.mx/estado/2026/oct/17/aftosa-en-ganado-de-sonora-no-afecta-a-chihuahua-1143849.html",
+        "https://www.eldiariodechihuahua.mx/local/2026/oct/17/aftosa-en-ganado-de-sonora-no-afecta-a-chihuahua-848745.html",
+        "https://www.eldiariodechihuahua.mx/economia/2026/oct/16/suspenden-temporalmente-ganaderos-exportaciones-a-eu-848604.html",
+        "https://www.lajornadadeoriente.com.mx/noticias/nacional/detectan-afta-en-un-becerro-de-sonora-y-suspenden-temporalmente-exportacion-a-eu-sader-activa-protocolos/",
+        "https://www.adnsureste.info/suspenden-la-exportacion-de-ganado-de-sonora-a-estados-unidos-por-posible-riesgo-sanitario-1900-h/",
+        "https://www.omnia.com.mx/noticia/446081/descartan-brote-de-fiebre-aftosa-en-ganado-que-ocasiono-el-freno-de-las-exportac"
+      ],
+      "press_list": [
+        "abc.com.py",
+        "adnsureste.info",
+        "aristeguinoticias.com",
+        "cuartopoder.mx",
+        "diario.mx",
+        "ejecentral.com.mx",
+        "eldiariodechihuahua.mx",
+        "eldiariodesonora.com.mx",
+        "elfinanciero.com.mx",
+        "elimparcial.com",
+        "eluniversal.com.mx",
+        "excelsior.com.mx",
+        "expreso.com.mx",
+        "horacero.com.mx",
+        "intoleranciadiario.com",
+        "lajornadadeoriente.com.mx",
+        "laopcion.com.mx",
+        "meganoticias.mx",
+        "notigape.com",
+        "notisistema.com",
+        "omnia.com.mx",
+        "puentelibre.mx",
+        "pulsoslp.com.mx",
+        "razon.com.mx",
+        "razon.com.mx:443",
+        "sdpnoticias.com",
+        "sinembargo.mx",
+        "tiempo.com.mx",
+        "tribuna.com.mx",
+        "tvazteca.com",
+        "vanguardia.com.mx"
+      ],
+      "cross_axis_partner_url": null,
+      "cross_axis_partner": null,
+      "generated_title": "멕시코 소나라주, 발열성 발진 의심 사태로 미국 수출 일시 중단…검역 결과 후 재개",
+      "summary": "2020년 10월 16일, 멕시코 소나라주에서 황소 1마리에서 발열성 발진(aftosa) 의심 증상이 발견되며 미국으로의 가축 수출이 일시 중단되었습니다. 멕시코 연방 농업부(Senasica)가 진단 결과, 해당 동물은 발열성 발진 및 기타 엑조틱 질병을 음성으로 확인했으나, 상처 부위에서 황소 포진성 염증 virus가 양성인 것으로 확인되었습니다. 검역 결과를 바탕으로 10월 20일, 소나라주-아과리아 프리에타 국경을 통한 가축 수출이 재개되었습니다.",
+      "summary_skipped_reason": null
+    },
+    {
+      "issue_score": 8.0,
+      "mention_count": 8,
+      "raw_mention_count": 8,
+      "titles": [
+        "Reuters : Україна просить сусідні країни відкрити транзит зерна",
+        "Volodimir Zelenski cere României și vecinilor deblocarea tranzitului de cereale , după ce Rusia a paralizat exporturile din Marea Neagră",
+        "Zelenski a cerut României și țărilor vecine să permită tranzitul cerealelor ucrainene . Anunțul făcut de premierul Ungariei",
+        "Volodimir Zelenski cere României , Poloniei , Slovaciei și Ungariei tranzitul cerealelor ucrainene către piețele europene",
+        "Заради блокадата в Черно море : Киев моли съседите да разрешат транзита на зърно",
+        "Ruské útoky blokujú Čierne more . Zelenskyj požiadal Slovensko a ďalších susedov o umožnenie tranzitu obilia",
+        "Zełenski poprosił Polskę , Węgry , Słowację i Rumunię o  zielone światło . Chodzi o ukraińskie zboże",
+        "Zelenskyj požiadal SR , Poľsko , Rumunsko a Maďarsko o tranzit obilia"
+      ],
+      "urls": [
+        "https://glavnoe.in.ua/news/reuters-ukrayina-prosyt-susidni-krayiny-vidkryty-tranzyt-zerna",
+        "https://www.stiripesurse.ro/volodimir-zelenski-cere-romaniei-si-vecinilor-deblocarea-tranzitului-de-cereale-dupa-ce-rusia-a-paralizat-exporturile-din-marea-neagra_3929180",
+        "https://adevarul.ro/stiri-externe/europa/zelenski-a-cerut-romaniei-si-tarilor-vecine-sa-2564714.html",
+        "https://business24.ro/cereale-ucrainene/zelenski-tranzit-cereale-ucrainene-piete-europa-1671606",
+        "https://news.bg/int-politics/zaradi-blokadata-v-cherno-more-kiev-moli-sasedite-da-razreshat-tranzita-na-zarno.html",
+        "https://hnonline.sk/svet/96308401-ruske-utoky-blokuju-cierne-more-zelenskyj-poziadal-slovensko-a-dalsich-susedov-o-umoznenie-tranzitu-obilia",
+        "https://www.wnp.pl/logistyka/zelenski-poprosil-polske-wegry-slowacje-i-rumunie-o-tranzyt-ukrainskiego-zboza,1110102.html",
+        "https://www.teraz.sk/zahranicie/zelenskyj-poziadal-sr-polsko-rumunsk/1000597-clanok.html"
+      ],
+      "press_list": [
+        "adevarul.ro",
+        "business24.ro",
+        "glavnoe.in.ua",
+        "hnonline.sk",
+        "news.bg",
+        "stiripesurse.ro",
+        "teraz.sk",
+        "wnp.pl"
+      ],
+      "cross_axis_partner_url": null,
+      "cross_axis_partner": null,
+      "generated_title": "우크라이나, 우크라이나 밀려나는 농산물 해상 수송 차단에 대해 헝가리·폴란드·루마니아·슬로바키아에 해외로 수송할 수 있도록 우회 통로 요청",
+      "summary": "우크라이나는 우크라이나의 밀·보리·대두 등 농산물이 헝가리·폴란드·루마니아·슬로바키아를 통해 유럽 내부로 우회하여 해상 수송이 차단된 чер해머 해역을 우회할 수 있도록 요청했습니다. 이에 헝가리 측은 통과지역으로서의 역할만 수행하면 허용할 것이라고 밝혔습니다.",
+      "summary_skipped_reason": null
+    },
+    {
+      "issue_score": 6.2,
+      "mention_count": 8,
+      "raw_mention_count": 8,
+      "titles": [
+        "India notifies first New Zealand FTA duty cuts ; sheep meat gets zero duty , kiwi fruit at 15 % ",
+        "India - New Zealand FTA : Sheep meat gets zero duty , kiwi fruit at 15 % as tariff cuts take effect October 20",
+        "India - New Zealand FTA to take effect October 20 ; trade agreement with Canada by year - end",
+        "India - New Zealand FTA to take effect October 20 ; trade agreement with Canada by year - end",
+        "India - New Zealand FTA to take effect October 20 ; trade agreement with Canada by year - end",
+        "India - New Zealand FTA to take effect October 20 ; trade agreement with Canada by year - end",
+        "India - New Zealand FTA to take effect October 20 ; trade agreement with Canada by year - end",
+        "India - New Zealand FTA Takes Effect October 20 ; Canada Trade Deal Expected by Year - End"
+      ],
+      "urls": [
+        "https://economictimes.indiatimes.com/news/economy/foreign-trade/india-notifies-first-new-zealand-fta-duty-cuts-wine-honey-kiwi-fruit-to-get-concessions-from-oct-20/articleshow/135006873.cms",
+        "https://www.livemint.com/news/india/indianew-zealand-fta-sheep-meat-gets-zero-duty-kiwi-fruit-at-15-as-tariff-cuts-take-effect-october-20-11792250495410.html",
+        "http://www.europesun.com/news/279376274/india-new-zealand-fta-to-take-effect-october-20-trade-agreement-with-canada-by-year-end",
+        "http://www.britainnews.net/news/279376274/india-new-zealand-fta-to-take-effect-october-20-trade-agreement-with-canada-by-year-end",
+        "http://www.batonrougepost.com/news/279376274/india-new-zealand-fta-to-take-effect-october-20-trade-agreement-with-canada-by-year-end",
+        "http://www.calcuttanews.net/news/279376274/india-new-zealand-fta-to-take-effect-october-20-trade-agreement-with-canada-by-year-end",
+        "http://www.torontotelegraph.com/news/279376274/india-new-zealand-fta-to-take-effect-october-20-trade-agreement-with-canada-by-year-end",
+        "https://openthemagazine.com/world/india-new-zealand-fta-comes-into-force-on-october-20-canada-deal-targeted-by-year-end"
+      ],
+      "press_list": [
+        "batonrougepost.com",
+        "britainnews.net",
+        "calcuttanews.net",
+        "economictimes.indiatimes.com",
+        "europesun.com",
+        "livemint.com",
+        "openthemagazine.com",
+        "torontotelegraph.com"
+      ],
+      "cross_axis_partner_url": null,
+      "cross_axis_partner": null,
+      "generated_title": "인도-뉴질랜드 FTA 20일 시행…양국 간 관세 인하 조치 발효",
+      "summary": "인도 재무부는 16일 발표한 알림을 통해, 20일부터 뉴질랜드산 양육류(신선·냉장·냉동 포함)에 대해 관세율을 0%로 인하하고, 키위과일에 대해서는 15%의 기본 관세율을 적용하는 등 인도-뉴질랜드 자유무역협정(FTA) 관련 수입 관세 인하 조치를 시행한다. 또한 인도 상업부처는 캐나다와의 총체적 경제협력협정(CEPA) 협상이 2026년 말까지 체결될 수 있도록 추진 중이며, 이번 FTA를 계기로 염섬화학품, 가죽, 신발, 기계공업품 등 수출에 긍정적 영향을 기대하고 있다.",
+      "summary_skipped_reason": null
+    }
+  ],
+  "domestic_by_category": {
+    "시장/가격 용어": [
+      {
+        "issue_score": 1.0,
+        "mention_count": 1,
+        "raw_mention_count": 1,
+        "titles": [
+          "중동發 곡물가 상승에 사료값  불똥 … 밥상물가 위태롭다 [ 농어촌이 미래다 - 그린 라이프 ] "
+        ],
+        "urls": [
+          "https://www.segye.com:443/newsView/20261014527242"
+        ],
+        "press_list": [
+          "segye.com:443"
+        ],
+        "cross_axis_partner_url": null,
+        "cross_axis_partner": null,
+        "category": "시장/가격 용어",
+        "generated_title": "중동전쟁 여파로 배합사료값 33개월 만에 최고치 기록, 축산물 물가 압박",
+        "summary": "중동전쟁으로 인해 9월 국제 곡물가가 17% 상승하면서, 원료 80%를 수입에 의존하는 국내 배합사료 1kg당 평균 가격이 648원으로 33개월 만에 최고치를 기록했다. 사료비가 축산농가 경영비의 절반을 차지하는 만큼, 이번 가격 상승이 육계·삼겹살 등 축산물 가격에까지 전이될 우려가 제기되고 있다. 농림축산식품부는 국내 생산 확충과 수입선 다변화를 병행해 대응 방안을 모색하고 있다.",
+        "summary_skipped_reason": null
+      }
+    ],
+    "사료업계 특화 용어": [
+      {
+        "issue_score": 1.0,
+        "mention_count": 1,
+        "raw_mention_count": 1,
+        "titles": [
+          "  국산 건초로 전량 대체 땐 年 5876억 아껴  [ 농어촌이 미래다 - 그린 라이프 ] "
+        ],
+        "urls": [
+          "https://www.segye.com:443/newsView/20261014527241"
+        ],
+        "press_list": [
+          "segye.com:443"
+        ],
+        "cross_axis_partner_url": null,
+        "cross_axis_partner": null,
+        "category": "사료업계 특화 용어",
+        "generated_title": "국산 건초·농산부산물 활용해 축산 사료비 절감 기술 확대",
+        "summary": "국산 건초와 농산부산물을 활용한 사료 대체 기술로 축산농가의 사료비 부담을 줄이는 방안이 현장에서 확대 적용되고 있다. 농촌진흥청 국립축산과학원이 개발한 자가배합사료(TMR) 프로그램은 농산부산물 47종을 조합해 한우 사료비를 평균 16% 절감할 수 있으며, 현재 900여 곳의 농가에서 이용 중이다. 또한, 국산 건초 생산 기술을 통해 수입 건초 대비 최대 37% 저렴하게 공급할 수 있어 연간 총 사료비 절감 효과가 크게 기대된다.",
+        "summary_skipped_reason": null
+      }
+    ],
+    "무역/관세 이슈": [
+      {
+        "issue_score": 1.0,
+        "mention_count": 1,
+        "raw_mention_count": 1,
+        "titles": [
+          "브라질 계란 논란에 송미령  비상시 대비 공급망 다변화해야  "
+        ],
+        "urls": [
+          "https://www.fnnews.com/news/202610171757316754"
+        ],
+        "press_list": [
+          "fnnews.com"
+        ],
+        "cross_axis_partner_url": null,
+        "cross_axis_partner": null,
+        "category": "무역/관세 이슈",
+        "generated_title": "송미령 장관, 브라질 계란 수입 비판에 \"공급망 다변화 필요\" 강조",
+        "summary": "송미령 농림축산식품부 장관은 브라질산 계란 고가 수입 논란에 대해 특정 국가 의존 시 공급 차질 위험이 있어 수입선을 다변화한 것이라고 설명했다. 또한 계란 수입은 국가 간 검역·위생 절차와 가축 질병 상황, 운송 여건 등을 충족해야 하는 복잡한 과정이라며, 미국·태국·스페인 등 다수 국가의 검역 절차를 마쳤지만 실제 수입은 현지 사정에 따라 어려움이 있을 수 있다는 점을 덧붙였다.",
+        "summary_skipped_reason": null
+      }
+    ],
+    "축종별 용어": [
+      {
+        "issue_score": 1.0,
+        "mention_count": 1,
+        "raw_mention_count": 1,
+        "titles": [
+          "  한우 반값에 패션 · 뷰티 최대 70 % 할인 … 신세계 쓱데이 30일 개막"
+        ],
+        "urls": [
+          "https://zdnet.co.kr/view/?no=20261017232957"
+        ],
+        "press_list": [
+          "zdnet.co.kr"
+        ],
+        "cross_axis_partner_url": null,
+        "cross_axis_partner": null,
+        "category": "축종별 용어",
+        "generated_title": "신세계 쓱데이, 한우 반값부터 패션·뷰티 70% 할인까지 11월 8일까지 개최",
+        "summary": "신세계그룹은 30일부터 11월 8일까지 열흘간 '대한민국 시그니처 세일'을 주제로 쓱데이를 개최한다. 이마트를 비롯한 그룹 계열사 18곳이 참여하며, 특히 한우 반값 할인과 패션·뷰티 최대 70% 할인 혜택을 제공한다.",
+        "summary_skipped_reason": null
+      }
+    ]
+  },
+  "international_by_category": {
+    "정부·제도 용어": [
+      {
+        "issue_score": 4.0,
+        "mention_count": 4,
+        "raw_mention_count": 4,
+        "titles": [
+          "ΥΠΑΑΤ : 42 επενδυτικά σχέδια στη Θεσσαλία με 36 , 4 εκατ . ευρώ - Εκσυγχρονισμός στον πρωτογενή τομέα μέσω του Ταμείου Ανάκαμψης",
+          "ΥΠΑΑΤ : 315 επενδυτικά σχέδια ύψους 329 , 6 εκατ . ευρώ στον εκσυγχρονισμό του πρωτογενούς τομέα μέσω του Ταμείου Ανάκαμψης",
+          "ΥΠΑΑΤ : 315 επενδυτικά σχέδια ύψους 329 , 6 εκατ . ευρώ στον εκσυγχρονισμό του πρωτογενούς τομέα μέσω του Ταμείου Ανάκαμψης",
+          "Επενδύσεις 330 εκατ . ευρώ στον αγροτικό τομέα μέσω του Ταμείου Ανάκαμψης , ολοκληρώθηκαν 315 σχέδια , πού κατευθύνθηκαν τα κονδύλια"
+        ],
+        "urls": [
+          "https://kosmoslarissa.gr/protoselida/ypaat-42-ependytika-schedia-sti-thessalia-me-364-ekat-evro-eksygchronismos-ston-protogeni-tomea-meso-tou-tameiou-anakampsis/",
+          "https://www.iefimerida.gr/oikonomia/ypaat-315-ependytika-shedia-ypsoys-3296-ekat-eyro-ston-eksyghronismo-toy-protogenoys",
+          "https://eleftheriaonline.gr/ellada-kosmos/oikonomia/item/361688-ypaat-315-ependytika-sxedia-ypsous-329-6-ekat-evro-ston-eksygxronismo-tou-protogenoys-tomea-meso-tou-tameiou-anakampsis",
+          "https://www.rethemnosnews.gr/oikonomia/727572_ependyseis-330-ekat-eyro-ston-agrotiko-tomea-meso-toy-tameioy-anakampsis"
+        ],
+        "press_list": [
+          "eleftheriaonline.gr",
+          "iefimerida.gr",
+          "kosmoslarissa.gr",
+          "rethemnosnews.gr"
+        ],
+        "cross_axis_partner_url": null,
+        "cross_axis_partner": null,
+        "category": "정부·제도 용어",
+        "generated_title": "그리스 사회·경제부진 기구재단(Recovery and Resilience Facility)를 통해 3억 2,960만 유로 규모 315건 농업 투자 계획 완료",
+        "summary": "그리스 농업·식품부(ΥΠΑΑΤ)는 사회·경제부진 기구재단(Ταμείο Ανάκαμψης και Ανθεκτικότητας) 지원으로 농업 부문 현대화를 위한 315건의 투자 계획(총 3억 2,960만 유로)을 마감하고 최종 접수를 완료했다. 이 중 지방 지역인 테살로νί키(Θεσσαλία)에서는 42건(3,640만 유로)이 집행되어 농업 생산성 및 경제적 효율성 제고에 기여할 예정이며, 공공 지원 규모는 총 1억 6,010만 유로로 계획되어 있다.",
+        "summary_skipped_reason": null
+      }
+    ],
+    "시장/가격 용어": [
+      {
+        "issue_score": 4.7,
+        "mention_count": 5,
+        "raw_mention_count": 5,
+        "titles": [
+          "Headline inflation drops to 14 . 63 % as food prices ease",
+          "Inflation Drops to 14 . 63 % – THISDAYLIVE",
+          "Nigeria Inflation Falls to 14 . 64 % as Food Prices Persist",
+          "Breaking : Nigeria inflation rate drops to 14 . 63 % ",
+          "Nigeria inflation drops to 14 . 63 % despite rising energy co"
+        ],
+        "urls": [
+          "https://www.vanguardngr.com/2026/10/headline-inflation-drops-to-14-63-as-food-prices-ease/",
+          "https://www.thisdaylive.com/2026/10/16/inflation-drops-to-14-63/",
+          "https://zalebs.com/business/nigerias-inflation-eases-to-14-64-in-september-as-food-costs-stay-high/",
+          "https://www.vanguardngr.com/2026/10/breaking-nigerias-inflation-rate-drops-to-14-63/",
+          "https://punchng.com/inflation-drops-to-14-63-despite-rising-energy-costs/"
+        ],
+        "press_list": [
+          "punchng.com",
+          "thisdaylive.com",
+          "vanguardngr.com",
+          "zalebs.com"
+        ],
+        "cross_axis_partner_url": null,
+        "cross_axis_partner": null,
+        "category": "시장/가격 용어",
+        "generated_title": "나이지리아 9월 물가 상승률 14.63%로 하락…식품 가격 완화에도 핵심 인플레이션은 고공",
+        "summary": "나이지리아 국립통계국(NBS)이 발표한 9월 소비자물가지수(CPI)에 따르면, 국가총물가지수(헤드라인 인플레이션)는 전월 15.39%에서 14.63%로 낮아졌으나, 이는 6월 이후 네 달 연속 하락세를 이은 것으로 식품 가격의 완화가 주효한 결과이다. 반면, 핵심 인플레이션은 13.29%를 유지하며 여전히 상승세를 보였고, 에너지 비용이 5.38% 상승하는 등 물가 압박 요인은 남아 있어 향후 인플레이션 둔화가 지속될지 주목할 필요가 있다.",
+        "summary_skipped_reason": null
+      }
+    ],
+    "사료업계 특화 용어": [
+      {
+        "issue_score": 4.0,
+        "mention_count": 4,
+        "raw_mention_count": 4,
+        "titles": [
+          "American hay growers face drought , pests and high fuel costs",
+          "American hay growers face drought , pests and high fuel costs | KCUR",
+          "American hay growers face drought , pests and high fuel costs",
+          "American hay growers face drought , pests and high fuel costs"
+        ],
+        "urls": [
+          "https://www.wglt.org/2026-10-16/hay-drought-pests-fuel-livestock",
+          "https://www.kcur.org/environment-agriculture/2026-10-16/hay-drought-pests-fuel-livestock",
+          "https://www.kwit.org/harvest-public-media/2026-10-16/hay-drought-pests-fuel-livestock",
+          "https://www.kmuw.org/2026-10-16/hay-drought-pests-fuel-livestock"
+        ],
+        "press_list": [
+          "kcur.org",
+          "kmuw.org",
+          "kwit.org",
+          "wglt.org"
+        ],
+        "cross_axis_partner_url": null,
+        "cross_axis_partner": null,
+        "category": "사료업계 특화 용어",
+        "generated_title": "미국 헐리컷 재배 농가, 가뭄·수입 살충·고가 연료비 동시 충격",
+        "summary": "미국 텍사스·오클라호마·네브래스카 등 주요 헐리컷 생산지에서 가뭄이 수확량을 억제하고, 기록적인 디젤 가격과 침입성 해충이 농가에 추가 부담을 주고 있다. 오클라호마 남부의 한 베테랑 헐리컷 농부는 \"봄 비가 잠깐 그쳤다가 60일간 비가 전혀 오지 않았다\"며 가뭄의 심각성을 전했다.",
+        "summary_skipped_reason": null
+      }
+    ],
+    "스마트팜/축산 기술": [
+      {
+        "issue_score": 3.0,
+        "mention_count": 3,
+        "raw_mention_count": 3,
+        "titles": [
+          "連續5年獲智慧城市創新應用獎 ！ 張麗善赴美分享AI農業 | ETtoday地方新聞",
+          "張麗善赴美出席ICF智慧城市高峰會 雲林兩度入選Top7",
+          "雲林入選ICF全球七大智慧城市 張麗善赴美分享農業轉型智慧治理成果"
+        ],
+        "urls": [
+          "https://www.ettoday.net/news/20261016/3255956.htm",
+          "https://n.yam.com/Article/20261016848295",
+          "https://n.yam.com/Article/20261017956918"
+        ],
+        "press_list": [
+          "ettoday.net",
+          "n.yam.com"
+        ],
+        "cross_axis_partner_url": null,
+        "cross_axis_partner": null,
+        "category": "스마트팜/축산 기술",
+        "generated_title": null,
+        "summary": null,
+        "summary_skipped_reason": "요약 생성 실패"
+      }
+    ],
+    "축종별 용어": [
+      {
+        "issue_score": 2.0,
+        "mention_count": 2,
+        "raw_mention_count": 2,
+        "titles": [
+          "台南畜產嘉年華10月24日柳營登場 首度加入國產羊肉",
+          "台南畜產嘉年華10月24日登場 牛羊鮮乳美食 、 親子DIY與郵輪大獎吸客"
+        ],
+        "urls": [
+          "https://n.yam.com/Article/20261016220866",
+          "https://n.yam.com/Article/20261016887843"
+        ],
+        "press_list": [
+          "n.yam.com"
+        ],
+        "cross_axis_partner_url": null,
+        "cross_axis_partner": null,
+        "category": "축종별 용어",
+        "generated_title": "10월 24일 타이난畜產嘉年華 개최…국산 양고기·신선 유제품 체험 등",
+        "summary": "국산 양고기를 첫 선보이는 台南畜產嘉年華이 10월 24일에 개최된다. 행사에서는 국내산 양고기와 신선한 우유·요거트 등을 활용한 음식과 체험 프로그램, 우편사탕 추첨 등이 준비되어 있어 관람객을 끌 전망이다.",
+        "summary_skipped_reason": null
+      }
+    ],
+    "무역/관세 이슈": [
+      {
+        "issue_score": 8.0,
+        "mention_count": 8,
+        "raw_mention_count": 8,
+        "titles": [
+          "Reuters : Україна просить сусідні країни відкрити транзит зерна",
+          "Volodimir Zelenski cere României și vecinilor deblocarea tranzitului de cereale , după ce Rusia a paralizat exporturile din Marea Neagră",
+          "Zelenski a cerut României și țărilor vecine să permită tranzitul cerealelor ucrainene . Anunțul făcut de premierul Ungariei",
+          "Volodimir Zelenski cere României , Poloniei , Slovaciei și Ungariei tranzitul cerealelor ucrainene către piețele europene",
+          "Заради блокадата в Черно море : Киев моли съседите да разрешат транзита на зърно",
+          "Ruské útoky blokujú Čierne more . Zelenskyj požiadal Slovensko a ďalších susedov o umožnenie tranzitu obilia",
+          "Zełenski poprosił Polskę , Węgry , Słowację i Rumunię o  zielone światło . Chodzi o ukraińskie zboże",
+          "Zelenskyj požiadal SR , Poľsko , Rumunsko a Maďarsko o tranzit obilia"
+        ],
+        "urls": [
+          "https://glavnoe.in.ua/news/reuters-ukrayina-prosyt-susidni-krayiny-vidkryty-tranzyt-zerna",
+          "https://www.stiripesurse.ro/volodimir-zelenski-cere-romaniei-si-vecinilor-deblocarea-tranzitului-de-cereale-dupa-ce-rusia-a-paralizat-exporturile-din-marea-neagra_3929180",
+          "https://adevarul.ro/stiri-externe/europa/zelenski-a-cerut-romaniei-si-tarilor-vecine-sa-2564714.html",
+          "https://business24.ro/cereale-ucrainene/zelenski-tranzit-cereale-ucrainene-piete-europa-1671606",
+          "https://news.bg/int-politics/zaradi-blokadata-v-cherno-more-kiev-moli-sasedite-da-razreshat-tranzita-na-zarno.html",
+          "https://hnonline.sk/svet/96308401-ruske-utoky-blokuju-cierne-more-zelenskyj-poziadal-slovensko-a-dalsich-susedov-o-umoznenie-tranzitu-obilia",
+          "https://www.wnp.pl/logistyka/zelenski-poprosil-polske-wegry-slowacje-i-rumunie-o-tranzyt-ukrainskiego-zboza,1110102.html",
+          "https://www.teraz.sk/zahranicie/zelenskyj-poziadal-sr-polsko-rumunsk/1000597-clanok.html"
+        ],
+        "press_list": [
+          "adevarul.ro",
+          "business24.ro",
+          "glavnoe.in.ua",
+          "hnonline.sk",
+          "news.bg",
+          "stiripesurse.ro",
+          "teraz.sk",
+          "wnp.pl"
+        ],
+        "cross_axis_partner_url": null,
+        "cross_axis_partner": null,
+        "category": "무역/관세 이슈",
+        "generated_title": "우크라이나 대통령, 검은해 수출 차질에 대응해 이웃 4개국에 곡물 통과 허용 요청",
+        "summary": "우크라이나의 볼로디미르 젤렌스키 대통령은 러시아의 검은해 공격으로 수출이 마비된 가운데, 폴란드·루마니아·슬로바키아·헝가리 4개국에 우크라이나 곡물의 유럽 내 통과를 허용해 달라고 요청했다. 헝가리의 피터 마이하르(Péter Magyar) 내각 총리는 곡물이 헝가리를 지나 다른 목적지로만 가는 경우에는 반대하지 않겠다고 조건부 수긍을 표했다.",
+        "summary_skipped_reason": null
+      }
+    ],
+    "질병명": [
+      {
+        "issue_score": 38.0,
+        "mention_count": 38,
+        "raw_mention_count": 38,
+        "titles": [
+          " ¿ Qué es la fiebre aftosa , la nueva enfermedad que acecha al ganado de México ? ",
+          "Sonora suspende exportación de ganado a Estados Unidos por posible fiebre aftosa",
+          "Clausuran exportación de ganado entre Sonora y Arizona por aftas en becerros",
+          "Suspenden temporalmente la exportación de ganado de Sonora a EU por sospecha de fiebre aftosa",
+          "México suspende exportación de ganado a EE . UU . por posible caso de fiebre aftosa",
+          "Emiten alerta por posible caso de fiebre aftosa en ganado mexicano",
+          " ¿ Qué es la fiebre aftosa y por qué emiten alerta por casos en ganado mexicano ? ",
+          "Reanudarán exportación de ganado ; descartan fiebre aftosa",
+          "Descartan fiebre aftosa en Sonora ; reanudan exportación de ganadoðŸŽ",
+          "Frontera con EU , en alerta por ganado mexicano",
+          "Suspenden temporalmente exportación de ganado de Sonora a EU",
+          " ¿ Por qué suspendieron la exportación de ganado de Sonora a Estados Unidos ? ",
+          "Sonora suspende exportación de ganado a EUA",
+          "México reanuda el martes exportaciones de ganado a EEUU después de descartar fiebre aftosa - Mundo",
+          "Sonora suspende la exportación de ganado a EU",
+          "Descartan fiebre aftosa en ganado",
+          "Suspenden cruce de ganado en Sonora por revisión sanitaria",
+          "Sonora suspende temporalmente exportación de ganado a EU por caso sospechoso de fiebre aftosa",
+          "Reanudan exportación de ganado a EU por Agua Prieta el 20 de octubre",
+          "Suspenden temporalmente ganaderos exportaciones a EU",
+          "Suspenden exportación de ganado ; temen fiebre aftosa",
+          "Suspenden exportación de ganado ; temen fiebre aftosa",
+          "Reanudarán exportación de ganado por Agua Prieta , Sonora , el 20 de octubre , no es fiebre aftosa",
+          " ¿ Qué es la fiebre aftosa ? Razón por la que Estados Unidos suspendió la exportación de ganado , principalmente becerros",
+          "Suspenden exportación de ganado tras detectar lesión en un becerro",
+          "Suspende Sonora exportación a EU ; sospechan fiebre aftosa",
+          "Suspenden temporalmente exportación de ganado de Sonora a EU por sospecha de fiebre aftosa",
+          "Suspende Sonora exportación a EU ; sospechan fiebre aftosa",
+          "Sonora suspende exportación de ganado a EU",
+          "Suspende temporalmente Sonora exportaciones de ganado a EU por revisión sanitaria",
+          "Suspenden temporalmente exportación de ganado sonorense por sospecha sanitaria",
+          "Por sospecha de fiebre aftosa detienen temporalmente exportación de ganado a Estados Unidos",
+          "Aftosa en ganado de Sonora no afecta a Chihuahua",
+          "Aftosa en ganado de Sonora no afecta a Chihuahua",
+          "Suspenden temporalmente ganaderos exportaciones a EU",
+          "Detectan afta en un becerro de Sonora y suspenden temporalmente exportación a EU ; Sader activa protocolos",
+          "Suspenden la exportación de ganado de Sonora a Estados Unidos por posible riesgo sanitario ( 19 : 00 h ) ",
+          "Descartan brote de fiebre aftosa en ganado que ocasionó el freno de las exportaciones en Sonora"
+        ],
+        "urls": [
+          "https://www.elfinanciero.com.mx/salud/2026/10/16/que-es-la-fiebre-aftosa-la-nueva-enfermedad-que-acecha-al-ganado-de-mexico/",
+          "https://www.sdpnoticias.com/mexico/sonora-suspende-exportacion-de-ganado-a-estados-unidos-por-posible-fiebre-aftosa/",
+          "https://www.excelsior.com.mx/nacional/clausuran-exportacion-ganado-sonora-arizona",
+          "https://tribuna.com.mx/campo/2026/10/16/suspenden-temporalmente-la-exportacion-de-ganado-de-sonora-a-eu-por-sospecha-de-fiebre-aftosa_702923/",
+          "https://aristeguinoticias.com/1610/mexico/mexico-suspende-exportacion-de-ganado-desde-sonora-a-ee-uu-por-posible-caso-de-fiebre-aftosa/",
+          "https://www.eluniversal.com.mx/nacion/emiten-alerta-por-posible-caso-de-fiebre-aftosa-en-ganado-mexicano-esperan-resultados-para-reanudar-exportaciones/",
+          "https://www.elimparcial.com/mexico/2026/10/17/que-es-la-fiebre-aftosa-y-por-que-emiten-alerta-por-casos-en-ganado-mexicano/",
+          "https://www.eldiariodechihuahua.mx/nacional/2026/oct/17/reanudaran-exportacion-de-ganado-descartan-fiebre-aftosa-848918.html",
+          "https://www.tiempo.com.mx/nacional/descartan-fiebre-aftosa-agua-prieta-sonora-reanudan-exportacion-ganado-octubre-2026/",
+          "https://horacero.com.mx/nacional/ganado-alerta-frontera-eu",
+          "https://www.eluniversal.com.mx/estados/suspenden-temporalmente-exportacion-de-ganado-de-sonora-a-eu-hay-sospecha-de-un-caso-de-fiebre-aftosa/",
+          "https://www.tvazteca.com/aztecanoticias/por-que-suspendieron-la-exportacion-ganado-sonora-a-estados-unidos/",
+          "https://www.cuartopoder.mx/nacional/sonora-suspende-exportacion-de-ganado-a-eua/594772",
+          "https://www.abc.com.py/internacionales/2026/10/18/mexico-reanuda-el-martes-exportaciones-de-ganado-a-eeuu-despues-de-descartar-fiebre-aftosa/",
+          "https://www.sinembargo.mx/4889062/mexico-suspende-la-exportacion-de-ganado-a-eu-por-deteccion-de-aftas-en-un-becerro/",
+          "https://pulsoslp.com.mx/nacional/descartan-fiebre-aftosa-en-ganado/2096989",
+          "https://www.expreso.com.mx/noticias/sonora/suspenden-cruce-de-ganado-en-sonora-por-revision-sanitaria/266566",
+          "https://www.elfinanciero.com.mx/estados/2026/10/16/sonora-suspende-temporalmente-exportacion-de-ganado-a-eu-por-caso-sospechoso-de-fiebre-aftosa/",
+          "https://laopcion.com.mx/nacional/reanudan-exportacion-de-ganado-a-eu-por-agua-prieta-el-20-de-octubre-20261017-530141.html",
+          "https://diario.mx/economia/2026/oct/16/suspenden-temporalmente-ganaderos-exportaciones-a-eu-1143757.html",
+          "https://www.razon.com.mx:443/negocios/2026/10/17/suspenden-exportacion-de-ganado-temen-fiebre-aftosa/",
+          "https://www.razon.com.mx/negocios/2026/10/17/suspenden-exportacion-de-ganado-temen-fiebre-aftosa/",
+          "https://www.eluniversal.com.mx/estados/reanudaran-exportacion-de-ganado-por-agua-prieta-sonora-el-20-de-octubre-resultados-de-laboratorio-de-senasica-descartan-fiebre-aftosa/",
+          "https://www.ejecentral.com.mx/nuestro-eje/que-es-la-fiebre-aftosa-razon-por-la-que-estados-unidos-suspendio-la-exportacion-de-ganado-principalmente-becerros",
+          "https://www.meganoticias.mx/cdmx/noticia/suspenden-exportaci%C3%B3n-de-ganado-tras-detectar-lesi%C3%B3n-en-un-becerro/779926",
+          "https://www.tiempo.com.mx/nacional/suspende-sonora-exportacion-a-eu-sospechan-fiebre-aftosa/",
+          "https://www.notigape.com/suspenden-temporalmente-exportacion-de-ganado-de-sonora-a-eu-por-sospecha-de-fiebre-aftosa/298504",
+          "https://puentelibre.mx/nacional/suspende-sonora-exportacion-a-eu-sospechan-fiebre-aftosa/",
+          "https://www.notisistema.com/noticias/sonora-suspende-temporalmente-exportacion-de-ganado-a-eu/",
+          "https://vanguardia.com.mx/noticias/suspende-temporalmente-sonora-exportaciones-de-ganado-a-eu-por-revision-sanitaria-NP24189859",
+          "https://eldiariodesonora.com.mx/nogales/2026/10/16/suspenden-temporalmente-exportacion-ganado-sonorense-sospecha-sanitaria.html",
+          "https://intoleranciadiario.com/articles/nacional/2026/10/16/1059217-por-sospecha-de-fiebre-aftosa-detienen-temporalmente-exportacion-de-ganado-a-estados-unidos.html",
+          "https://diario.mx/estado/2026/oct/17/aftosa-en-ganado-de-sonora-no-afecta-a-chihuahua-1143849.html",
+          "https://www.eldiariodechihuahua.mx/local/2026/oct/17/aftosa-en-ganado-de-sonora-no-afecta-a-chihuahua-848745.html",
+          "https://www.eldiariodechihuahua.mx/economia/2026/oct/16/suspenden-temporalmente-ganaderos-exportaciones-a-eu-848604.html",
+          "https://www.lajornadadeoriente.com.mx/noticias/nacional/detectan-afta-en-un-becerro-de-sonora-y-suspenden-temporalmente-exportacion-a-eu-sader-activa-protocolos/",
+          "https://www.adnsureste.info/suspenden-la-exportacion-de-ganado-de-sonora-a-estados-unidos-por-posible-riesgo-sanitario-1900-h/",
+          "https://www.omnia.com.mx/noticia/446081/descartan-brote-de-fiebre-aftosa-en-ganado-que-ocasiono-el-freno-de-las-exportac"
+        ],
+        "press_list": [
+          "abc.com.py",
+          "adnsureste.info",
+          "aristeguinoticias.com",
+          "cuartopoder.mx",
+          "diario.mx",
+          "ejecentral.com.mx",
+          "eldiariodechihuahua.mx",
+          "eldiariodesonora.com.mx",
+          "elfinanciero.com.mx",
+          "elimparcial.com",
+          "eluniversal.com.mx",
+          "excelsior.com.mx",
+          "expreso.com.mx",
+          "horacero.com.mx",
+          "intoleranciadiario.com",
+          "lajornadadeoriente.com.mx",
+          "laopcion.com.mx",
+          "meganoticias.mx",
+          "notigape.com",
+          "notisistema.com",
+          "omnia.com.mx",
+          "puentelibre.mx",
+          "pulsoslp.com.mx",
+          "razon.com.mx",
+          "razon.com.mx:443",
+          "sdpnoticias.com",
+          "sinembargo.mx",
+          "tiempo.com.mx",
+          "tribuna.com.mx",
+          "tvazteca.com",
+          "vanguardia.com.mx"
+        ],
+        "cross_axis_partner_url": null,
+        "cross_axis_partner": null,
+        "category": "질병명",
+        "generated_title": "멕시코 소노라주, 가축 수출 일시 중단… 구슬열 의심에 미국과 EU 무역 영향",
+        "summary": "멕시코 소노라주는 2025년 10월 16일, 급성 질병 의심 증상(개구름) 발견으로 미국으로의 가축 수출을 일시 중단했으며, 사유는 고병원성 전염성 질병인 구슬열(aftosa) 가능성이 있음. 검역 당국은 발견된 증상이 구슬열 외에도 상처성 구강염, 유두성 구강염 등 다른 질병과 유사할 수 있어 실험실 검사를 진행 중이며, 구슬열 확진 여부는 아직 확인되지 않았다. 이번 사건은 멕시코가 70년 이상 전 구슬열을 퇴치한 이력이 있어 국내 가축 산업계에 큰 경계심과 보건적 위기감을 초래하고 있음.",
+        "summary_skipped_reason": null
+      }
+    ],
+    "가금 계열화/수직계열화": [
+      {
+        "issue_score": 1.0,
+        "mention_count": 1,
+        "raw_mention_count": 1,
+        "titles": [
+          "冰城关注｜构建全产业链壮大县域富民产业"
+        ],
+        "urls": [
+          "https://www.hljnews.cn/jjny/content/2026-10/16/content_912653.html"
+        ],
+        "press_list": [
+          "hljnews.cn"
+        ],
+        "cross_axis_partner_url": null,
+        "cross_axis_partner": null,
+        "category": "가금 계열화/수직계열화",
+        "generated_title": "하얼빈, 한대토지 풍요로 농업·축산·어업 전산업맥락계 질서 있는 발전 추진",
+        "summary": "하얼빈시가 한대토지(한대토지 질서)의 자원적 우위를 기반으로 양질의 풍요를 확보하기 위해, 3천만 무(간헐) 이상의 밀봉면적과 300억 리터(중량) 이상의 총생산능력을 유지하며 급속한 조사 수확률을 달성하고 있다. 또한, 축산·어업 부문에서도 110만 톤 이상의 고기·계란·우유 총생산량을 지속적으로 유지하고, 금융 전담 대출을 활용해 돼룡축산업의 규모화·표준화를 추진하며, 특산물(예: 방정은제, 대백어, 고화어 등) 양성과 간헐어업의 확대를 통해 다변화된 식량 공급망을 구축하고 있다.",
+        "summary_skipped_reason": null
+      }
+    ],
+    "사료첨가제/항생제 규제": [
+      {
+        "issue_score": 1.0,
+        "mention_count": 1,
+        "raw_mention_count": 1,
+        "titles": [
+          "Livestock Experts Warn Farmers Against Indiscriminate Use of Antibiotics – Daily Trust"
+        ],
+        "urls": [
+          "https://dailytrust.com/livestock-experts-warn-farmers-against-indiscriminate-use-of-antibiotics/"
+        ],
+        "press_list": [
+          "dailytrust.com"
+        ],
+        "cross_axis_partner_url": null,
+        "cross_axis_partner": null,
+        "category": "사료첨가제/항생제 규제",
+        "generated_title": "가축 진료 전문가, 농가에 항생제 과용 경고",
+        "summary": "바우치 주의 가축 전문가들이 농가에서 항생제를 무분별하게 사용하지 말라고 경고했습니다. 이는 항제내성(AMR) 확산을 촉진하고 동물·인간 모두의 건강을 위협할 수 있다는 이유입니다. 이번 경고는 바우치 주에서 열린 첫 'Bauchi Livestock Stakeholders’ Engagement and Capacity Building Forum'에서 나왔습니다.",
+        "summary_skipped_reason": null
+      }
+    ]
+  },
+  "category_distribution": {
+    "국내": {
+      "시장/가격 용어": 2,
+      "사료업계 특화 용어": 1,
+      "무역/관세 이슈": 1,
+      "기타": 1,
+      "축종별 용어": 1
+    },
+    "해외": {
+      "정부·제도 용어": 53,
+      "시장/가격 용어": 68,
+      "사료업계 특화 용어": 27,
+      "기타": 108,
+      "스마트팜/축산 기술": 24,
+      "축종별 용어": 14,
+      "무역/관세 이슈": 57,
+      "질병명": 77,
+      "가금 계열화/수직계열화": 1,
+      "사료첨가제/항생제 규제": 2
+    }
+  },
+  "gdelt_timeline": {},
+  "failed_sources": []
+}
