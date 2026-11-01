@@ -1,0 +1,165 @@
+{
+  "generated_at": "2026-11-01T21:28:09.456568+00:00",
+  "domestic": [],
+  "international": [
+    {
+      "issue_score": 0.7,
+      "mention_count": 1,
+      "raw_mention_count": 1,
+      "titles": [
+        "El granero de Europa se achicharra :  Ha sido una sequía como no había visto en más de 30 años  | Negocios"
+      ],
+      "urls": [
+        "https://elpais.com/economia/negocios/2026-10-27/el-granero-de-europa-se-achicharra-ha-sido-una-sequia-como-no-habia-visto-en-mas-de-30-anos.html"
+      ],
+      "press_list": [
+        "elpais.com"
+      ],
+      "cross_axis_partner_url": null,
+      "cross_axis_partner": null,
+      "generated_title": "유럽의 곡창, 30년 만의 최악 가뭄으로 초토화",
+      "summary": "루마니아 북서부 농부 단 코르부트는 올해 옥수수 수확량이 거의 전무하다고 밝혔으며, 이는 30년 만에 최악의 가뭄으로 인해 발생했습니다. 그는 2025년 8월부터 2026년 8월까지의 강수량이 약 250리터/제곱미터에 불과해 정상적인 500~600리터/제곱미터보다 현저히 낮았다고 설명하며, 이 상황을 재앙으로 표현했습니다. 이러한 극심한 강수량 부족으로 인해 곡물 생산량이 급감하면서 유럽의 주요 곡창 지대가 위기에 처했습니다.",
+      "summary_skipped_reason": null
+    },
+    {
+      "issue_score": 0.7,
+      "mention_count": 1,
+      "raw_mention_count": 1,
+      "titles": [
+        "云南猪价格今日猪价 （ 最新云南猪价格今日猪价 ） "
+      ],
+      "urls": [
+        "https://www.mastv.cc/shbk/177.html"
+      ],
+      "press_list": [
+        "mastv.cc"
+      ],
+      "cross_axis_partner_url": null,
+      "cross_axis_partner": null,
+      "generated_title": "云南省猪价格今日最新行情",
+      "summary": null,
+      "summary_skipped_reason": "수집 데이터 부족"
+    },
+    {
+      "issue_score": 0.7,
+      "mention_count": 1,
+      "raw_mention_count": 1,
+      "titles": [
+        "Poultry Farmers Warn of At Least 15 % Price Increase Ahead of Christmas – Ghanamma . com"
+      ],
+      "urls": [
+        "https://www.ghanamma.com/2026/10/27/poultry-farmers-warn-of-at-least-15-price-increase-ahead-of-christmas/"
+      ],
+      "press_list": [
+        "ghanamma.com"
+      ],
+      "cross_axis_partner_url": null,
+      "cross_axis_partner": null,
+      "generated_title": "가나 양계농가, 크리스마스를 앞두고 최소 15% 가격 인상 발표",
+      "summary": "가나 양계농가들은 생산 및 운송 비용 상승으로 인해 크리스마스를 앞두고 최소 15% 가격 인상을 경고했다. 그레이터 아크라 양계농가협회는 생산자들이 점점 증가하는 비용, 특히 사료비 부담을 더 이상 감당할 수 없어 가격 조정이 불가피하다고 밝혔다. 협회 최고경영자인 모하메드 알리는 이러한 가격 인상이 수요가 증가하는 명절 기간과 맞물릴 것이라고 말했다.",
+      "summary_skipped_reason": null
+    }
+  ],
+  "domestic_by_category": {},
+  "international_by_category": {
+    "가금 계열화/수직계열화": [
+      {
+        "issue_score": 0.7,
+        "mention_count": 1,
+        "raw_mention_count": 1,
+        "titles": [
+          "Poultry Farmers Warn of At Least 15 % Price Increase Ahead of Christmas – Ghanamma . com"
+        ],
+        "urls": [
+          "https://www.ghanamma.com/2026/10/27/poultry-farmers-warn-of-at-least-15-price-increase-ahead-of-christmas/"
+        ],
+        "press_list": [
+          "ghanamma.com"
+        ],
+        "cross_axis_partner_url": null,
+        "cross_axis_partner": null,
+        "category": "가금 계열화/수직계열화",
+        "generated_title": "가나 양계농가, 크리스마스 앞두고 최소 15% 가격 인상 경고",
+        "summary": "가나 양계농가 협회는 사료비와 운송비 상승으로 생산비 부담이 커져 크리스마스 성수기에 맞춰 닭고기 가격을 최소 15% 인상할 수밖에 없다고 밝혔다. 협회장 모하메드 알리는 수요가 늘어나는 연말 축제 기간에 가격 조정이 불가피하다고 설명했다. 사료 비용이 주요 압박 요인으로 지목되고 있다.",
+        "summary_skipped_reason": null
+      }
+    ],
+    "시장/가격 용어": [
+      {
+        "issue_score": 0.7,
+        "mention_count": 1,
+        "raw_mention_count": 1,
+        "titles": [
+          "El granero de Europa se achicharra :  Ha sido una sequía como no había visto en más de 30 años  | Negocios"
+        ],
+        "urls": [
+          "https://elpais.com/economia/negocios/2026-10-27/el-granero-de-europa-se-achicharra-ha-sido-una-sequia-como-no-habia-visto-en-mas-de-30-anos.html"
+        ],
+        "press_list": [
+          "elpais.com"
+        ],
+        "cross_axis_partner_url": null,
+        "cross_axis_partner": null,
+        "category": "시장/가격 용어",
+        "generated_title": "유럽 농업, 30년 만에 최악의 가뭄",
+        "summary": "루마니아 북서부 옥수수 밭에서 30년 만에 최악의 가뭄이 지속돼 수확량이 급감하고 있다. 농민 댄 코부트는 강수량이 250L/m²에 불과해 보통 500~600L/m²의 절반도 되지 않아 '재앙'이라며 현 상황을 말한다.",
+        "summary_skipped_reason": null
+      }
+    ],
+    "축종별 용어": [
+      {
+        "issue_score": 0.7,
+        "mention_count": 1,
+        "raw_mention_count": 1,
+        "titles": [
+          "云南猪价格今日猪价 （ 最新云南猪价格今日猪价 ） "
+        ],
+        "urls": [
+          "https://www.mastv.cc/shbk/177.html"
+        ],
+        "press_list": [
+          "mastv.cc"
+        ],
+        "cross_axis_partner_url": null,
+        "cross_axis_partner": null,
+        "category": "축종별 용어",
+        "generated_title": "윈난 돼지 가격 오늘",
+        "summary": null,
+        "summary_skipped_reason": "수집 데이터 부족"
+      }
+    ],
+    "사료업계 특화 용어": [
+      {
+        "issue_score": 0.4,
+        "mention_count": 1,
+        "raw_mention_count": 1,
+        "titles": [
+          "RSDP - Funded Copra Storage & Buying Centre Facility Handed Over To KCDA"
+        ],
+        "urls": [
+          "https://www.scoop.co.nz/stories/WO2610/S00184/rsdp-funded-copra-storage-buying-centre-facility-handed-over-to-kcda.htm"
+        ],
+        "press_list": [
+          "scoop.co.nz"
+        ],
+        "cross_axis_partner_url": null,
+        "cross_axis_partner": null,
+        "category": "사료업계 특화 용어",
+        "generated_title": "RSDP 지원, 솔로몬 제도(Solomon Islands) 코프라·코코아 수확 후처리센터 개소",
+        "summary": "2025년 RSDP 지원 하에 솔로몬 제도 콜로투비·콜로몰라 행정구역 HKH 이사벨주에서 코프라·코코아 농가를 위한 저장·구매센터가 KCDA에 인도됐다. 이 센터는 농산물 저장 및 판매 인프라가 부족한 농민들의 소득 안정화를 목적으로 한다. 영국령 솔로몬 제도 정부와 중화인민공화국(PRC) 간 협력 사업으로 진행됐다.",
+        "summary_skipped_reason": null
+      }
+    ]
+  },
+  "category_distribution": {
+    "국내": {},
+    "해외": {
+      "가금 계열화/수직계열화": 6,
+      "시장/가격 용어": 4,
+      "축종별 용어": 2,
+      "사료업계 특화 용어": 1
+    }
+  },
+  "gdelt_timeline": {},
+  "failed_sources": []
+}
