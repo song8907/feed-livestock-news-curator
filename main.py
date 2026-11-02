@@ -29,7 +29,6 @@ import naver_collector
 import scorer
 import issue_grouper
 import llm_summarizer
-from WATT_collector import collect as watt_collect  # noqa: N813
 import keyword_source
 import keyword_tagger
 import category_aggregator
@@ -49,7 +48,7 @@ COLLECTED_ARTIFACT_PATH = "collected_articles.json"
 # --- 파이프라인 시간 예산 체크포인트 (각 진입점 자기 시작 기준 절대 분) ---
 # run_collect()는 GDELT_DEADLINE_MINUTES만, run_process()는 나머지 넷을 씀 -
 # 둘 다 자기 진입점의 pipeline_start 기준. 값은 실측 보고 조정할 것.
-GDELT_DEADLINE_MINUTES = 320          # 5:20 - job1: GDELT 수집(WATT/네이버 포함). 여유 40분 = python 시작 전 셋업 step(체크아웃/툴 정리/pip/playwright) + 마지막 요청 timeout + artifact 업로드
+GDELT_DEADLINE_MINUTES = 320          # 5:20 - job1: GDELT 수집(네이버 포함). 여유 40분 = python 시작 전 셋업 step(체크아웃/툴 정리/pip/playwright) + 마지막 요청 timeout + artifact 업로드
 GROUPING_DEADLINE_MINUTES = 120      # 2:00 - job2: 임베딩 로드 + 이슈 그룹핑(1~3차, 필터링 전 원본 전체 대상)
 RELEVANCE_DEADLINE_MINUTES = 220      # 3:40 - job2: [5] 관련성 필터 (그룹 대표 1건씩만 판단)
 RECATEGORIZE_DEADLINE_MINUTES = 240   # 4:00 - job2: [6] 카테고리 재분류 (별도 체크포인트 - [5]가 늦어도 20분은 보장됨)
@@ -85,8 +84,8 @@ def _load_collected(path: str = COLLECTED_ARTIFACT_PATH) -> tuple[list[dict], di
 # ---------------------------------------------------------------------------
 
 def run_collectors(pipeline_start: float) -> tuple[list[dict], dict, list[str]]:
-    """watt/naver/gdelt collector 순차 실행. 소스별 독립 실행(하나 실패해도 나머지 계속).
-    GDELT에는 pipeline_start 기준 GDELT_DEADLINE_MINUTES 절대 마감을 넘김(WATT/네이버가 먼저 쓴 시간이 자동으로 반영됨).
+    """naver/gdelt collector 순차 실행(Feed Strategy/WATT는 2026-11 제거). 소스별 독립 실행(하나 실패해도 나머지 계속).
+    GDELT에는 pipeline_start 기준 GDELT_DEADLINE_MINUTES 절대 마감을 넘김(네이버가 먼저 쓴 시간이 자동으로 반영됨).
 
     반환: all_articles(합친 기사 리스트), gdelt_timeline, failed_sources
     """
@@ -95,17 +94,13 @@ def run_collectors(pipeline_start: float) -> tuple[list[dict], dict, list[str]]:
     failed_sources: list[str] = []
 
     try:
-        watt_articles = watt_collect()
-        all_articles.extend(watt_articles)
-        print(f"[main] WATT 수집 완료 - {len(watt_articles)}건")
-    except Exception as e:
-        print(f"[main] 🔴 조치필요 [MN-01] - WATT 수집 실패 (소스 전체): {type(e).__name__} - {e!r}")
-        failed_sources.append("WATT")
-
-    try:
         naver_articles = naver_collector.collect()
         all_articles.extend(naver_articles)
         print(f"[main] 네이버 수집 완료 - {len(naver_articles)}건")
+        if not naver_articles:
+            # 키워드 전체 0건은 인증 오류 등 소스 장애 - 메일에 "국내 이슈 없음"이 아니라 실패로 보이게 함.
+            print("[main] 🔴 조치필요 [MN-17] - 네이버 수집 결과 0건 - 인증/API 장애 의심")
+            failed_sources.append("네이버(0건)")
     except Exception as e:
         print(f"[main] 🔴 조치필요 [MN-02] - 네이버 수집 실패 (소스 전체): {type(e).__name__} - {e!r}")
         failed_sources.append("네이버")
@@ -115,6 +110,9 @@ def run_collectors(pipeline_start: float) -> tuple[list[dict], dict, list[str]]:
         gdelt_articles, gdelt_timeline = gdelt_collector.collect(deadline=gdelt_deadline)
         all_articles.extend(gdelt_articles)
         print(f"[main] GDELT 수집 완료 - {len(gdelt_articles)}건")
+        if not gdelt_articles:
+            print("[main] 🔴 조치필요 [MN-18] - GDELT 수집 결과 0건 - API 조절/장애 의심")
+            failed_sources.append("GDELT(0건)")
     except Exception as e:
         print(f"[main] 🔴 조치필요 [MN-03] - GDELT 수집 실패 (소스 전체): {type(e).__name__} - {e!r}")
         failed_sources.append("GDELT")

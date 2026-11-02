@@ -17,9 +17,17 @@ import requests
 import requests.sessions
 import requests.utils as _requests_utils
 
+import pandas as pd
+
+import gkg_collector
 import keyword_source
 from gdeltdoc import GdeltDoc, Filters
 from gdeltdoc.errors import RateLimitError
+
+
+class GdeltEmptyResponseError(RateLimitError):
+    """HTTP 200인데 본문이 `{}`(articles 키 없음)인 응답 - GDELT 조절(throttle) 상태로 간주.
+    진짜 0건이면 `{"articles": []}`가 오므로 구분 가능. RateLimitError를 상속해 429와 같은 백오프로 재시도."""
 
 # --- 요청 타임아웃 ---
 # gdeltdoc은 requests.get()을 timeout 없이 호출함 -> GDELT가 응답을 매달면 무한 대기,
@@ -449,7 +457,8 @@ def _call_with_retry(func, *args, label: str = "", **kwargs):
                     f"({max(_seconds_left(), 0):.0f}초 남음)을 넘김 - 재시도 중단") from e
             rate_limit_attempt += 1
             now_str = datetime.now(timezone.utc).isoformat(timespec="seconds")
-            print(f"[gdelt] {now_str} - {label} - 429 rate limit - {wait:.0f}초 전역 쿨다운 설정 "
+            kind = "빈 응답({}) - 조절로 추정" if isinstance(e, GdeltEmptyResponseError) else "429 rate limit"
+            print(f"[gdelt] {now_str} - {label} - {kind} - {wait:.0f}초 전역 쿨다운 설정 "
                   f"({rate_limit_attempt}/{MAX_RETRIES})")
             _trigger_cooldown(wait)
         except (requests.exceptions.Timeout, requests.exceptions.ConnectionError,
@@ -463,6 +472,15 @@ def _call_with_retry(func, *args, label: str = "", **kwargs):
                   f"({network_attempt}/{NETWORK_ERROR_MAX_RETRIES})")
             if not _sleep_within_budget(NETWORK_ERROR_WAIT_SECONDS):
                 raise BudgetExceededError(f"{label} - 네트워크 재시도 대기 중 시간 예산 마감 도달") from e
+
+
+def _article_search(gd: "GdeltDoc", filters: "Filters") -> pd.DataFrame:
+    """gd.article_search 대체. 라이브러리는 `{}` 응답을 빈 DataFrame으로 바꿔버려서
+    '진짜 0건'과 '조절당해서 빈 응답'을 구분 못 함 - 원본 dict를 직접 보고 판단."""
+    data = gd._query("artlist", filters.query_string)
+    if not isinstance(data, dict) or "articles" not in data:
+        raise GdeltEmptyResponseError(f"articles 키 없는 응답: {str(data)[:100]!r}")
+    return pd.DataFrame(data["articles"])
 
 
 def _parse_seendate(raw: str) -> datetime:
@@ -508,7 +526,7 @@ def _collect_articles_for_keyword(gd: "GdeltDoc", keyword: str) -> tuple[bool, l
     false_positive_count = 0
 
     try:
-        articles_df = _call_with_retry(gd.article_search, f, label=f"{keyword} / article_search")
+        articles_df = _call_with_retry(_article_search, gd, f, label=f"{keyword} / article_search")
 
         if articles_df is not None and not articles_df.empty:
             for _, row in articles_df.iterrows():
@@ -571,7 +589,7 @@ def _collect_articles_for_keywords(gd: "GdeltDoc", keywords: list[str]) -> tuple
     false_positive_count = 0
 
     try:
-        articles_df = _call_with_retry(gd.article_search, f, label=f"{label} / article_search")
+        articles_df = _call_with_retry(_article_search, gd, f, label=f"{label} / article_search")
 
         if articles_df is not None and not articles_df.empty:
             for _, row in articles_df.iterrows():
@@ -709,6 +727,46 @@ def _collect_timeline_for_keyword(gd: "GdeltDoc", keyword: str) -> dict | None:
         return None
 
 
+# --- GKG 원본 파일 대체 수집(DOC API 429/{} 장애 대응) ---
+# GKG는 제목만 매칭하므로 너무 일반적인 단어·동음 약어는 노이즈가 커서 GKG에서만 제외.
+# (2026-11-02 7일치 실측: BSE는 거의 봄베이증권거래소, ASF는 루마니아 금융당국, corn은 옥수수 미로, quarantine은 에볼라 격리)
+GKG_EXCLUDE_KEYWORDS = {
+    "bse", "asf", "amr", "sbm", "ped",
+    "corn", "maize", "wheat", "quarantine", "surveillance", "disease control", "disease surveillance",
+    "emergency response", "consumer price", "retail price", "wholesale price",
+    "market access", "trade restriction", "trade dispute", "import ban", "export ban",
+}
+
+
+def _gkg_fallback(keywords: list[str], reason: str) -> list[dict]:
+    """최근 DAYS_BACK일 GKG 슬롯에서 제목 매칭으로 보충. 실패해도 예외 없이 빈 리스트."""
+    usable = [kw for kw in dict.fromkeys(keywords) if kw.lower() not in GKG_EXCLUDE_KEYWORDS]
+    if not usable:
+        return []
+    end = datetime.now(timezone.utc).replace(second=0, microsecond=0)
+    start = end - timedelta(days=DAYS_BACK)
+    print(f"[gdelt] GKG 대체 수집 진입({reason}) - 키워드 {len(usable)}개 "
+          f"(일반 단어 {len(keywords) - len(usable)}개 제외)")
+    try:
+        return gkg_collector.collect(usable, start, end, is_false_positive=_is_false_positive)
+    except Exception as e:
+        print(f"[gdelt] 🔴 조치필요 [GD-12] - GKG 대체 수집 실패: {type(e).__name__} - {e!r}")
+        return []
+
+
+def _doc_api_available(gd: "GdeltDoc", keyword: str) -> bool:
+    """본 수집 전 DOC API 상태 1회 확인. 429/{}로 재시도까지 실패하면 False(이번 실행은 GKG로 바로 전환)."""
+    f = Filters(keyword=keyword, timespan="1d", num_records=1)
+    try:
+        _call_with_retry(_article_search, gd, f, label=f"{keyword} / 상태 확인")
+        return True
+    except (RateLimitError, BudgetExceededError) as e:
+        print(f"[gdelt] 🟡 주의 [GD-13] - DOC API 상태 확인 실패({type(e).__name__}) - 이번 실행은 GKG 대체 수집으로 전환")
+        return False
+    except Exception:
+        return True  # 쿼리 거부(ValueError) 등은 API 장애가 아님 - 본 수집에서 기존 로직대로 처리
+
+
 def collect(keywords: list[str] | None = None, deadline: float | None = None) -> tuple[list[dict], dict]:
     """
     KEYWORDS_EN(또는 인자로 넘긴 keywords)을 대상으로 GDELT에서 기사 수집. 진입점.
@@ -756,6 +814,14 @@ def collect(keywords: list[str] | None = None, deadline: float | None = None) ->
     timeline_by_keyword = {}
 
     if not active_keywords and not known_crowders:
+        return all_articles, timeline_by_keyword
+
+    # --- 0단계: DOC API 상태 확인 - 막혀 있으면 수 시간 재시도로 시간을 쓰지 않고 바로 GKG로 ---
+    if not _doc_api_available(gd, (known_crowders + active_keywords)[0]):
+        all_articles = _gkg_fallback(list(target_keywords), "DOC API 장애")
+        _update_skip_state_after_run()
+        _update_crowding_state_after_run()
+        _active_deadline = None
         return all_articles, timeline_by_keyword
 
     def _over_budget() -> bool:
@@ -905,6 +971,17 @@ def collect(keywords: list[str] | None = None, deadline: float | None = None) ->
         print(f"[gdelt] 🟡 주의 - 시간 예산 초과로 이번 실행에서 아예 시도 못 한 키워드 "
               f"{len(unique_skipped)}개(실패로 기록되지 않음, 다음 실행에서 처음부터 재시도됨): "
               f"{unique_skipped}")
+
+    # --- 3단계: DOC 최종 0건이면 전 키워드, 일부 실패/미시도면 그 키워드만 GKG로 보충 ---
+    if not all_articles:
+        gkg_keywords, reason = list(target_keywords), "DOC 결과 0건"
+    else:
+        gkg_keywords, reason = failed_keywords + list(skipped_due_to_budget), "DOC 실패/미시도 키워드"
+    if gkg_keywords:
+        seen = {a["url"] for a in all_articles}
+        added = [a for a in _gkg_fallback(gkg_keywords, reason) if a["url"] not in seen]
+        all_articles.extend(added)
+        print(f"[gdelt] GKG 대체 수집으로 {len(added)}건 추가")
 
     _update_skip_state_after_run()
     _update_crowding_state_after_run()

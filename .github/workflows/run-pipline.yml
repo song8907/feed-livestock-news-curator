@@ -57,9 +57,6 @@ jobs:
       - name: 파이썬 의존성 설치
         run: pip install -r requirements.txt
 
-      - name: Playwright 브라우저(Chromium) 설치
-        run: playwright install --with-deps chromium
-
       - name: apt 캐시 정리
         run: |
           sudo apt-get clean

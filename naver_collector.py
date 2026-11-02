@@ -16,13 +16,81 @@ import keyword_source
 
 load_dotenv()
 
-NAVER_API_URL = "https://openapi.naver.com/v1/search/news.json"
+# NAVER Developers Center -> NAVER API HUB(NCP API Gateway) 이관(2026-07). HUB 키는 옛 주소에서 401.
+NAVER_API_URL = "https://naverapihub.apigw.ntruss.com/search/v1/news"
 DAYS_BACK = 7  # 최근 N일 이내 기사만
 
 # fallback 키워드. 구글 시트(KEYWORD_SHEET_CSV_URL) 우선, 실패 시 이 리스트 사용.
 # 시트 변경 시 수동 동기화 필요(자동 아님).
-KEYWORDS = ["조류독감", "사료가격", "방역대", "가축 이동제한", "양돈",
-            "사료공장", "사료첨가제", "축산물 할당관세", "축산업 계열화", "스마트축사"]
+# 시트 실패 시 fallback - 시트 정상 시 마지막 로드 목록(국문 66개)을 그대로 옮김.
+KEYWORDS = [
+    "광우병",
+    "구제역",
+    "뉴캣슬병",
+    "돼지생식기호흡기증후군",
+    "돼지열병",
+    "돼지유행성설사병",
+    "럼피스킨병",
+    "브루셀라병",
+    "아프리카돼지열병",
+    "우결핵",
+    "조류독감",
+    "곡물가격",
+    "곡물자급률",
+    "국제곡물가",
+    "대두박",
+    "배합사료",
+    "사료 원료",
+    "사료가격",
+    "사료값",
+    "사료자급률",
+    "산지가격",
+    "축산물 수출입",
+    "가축 이동제한",
+    "가축분뇨",
+    "가축전염병예방법",
+    "농림축산검역본부",
+    "동물복지 인증",
+    "무항생제 축산물",
+    "방역대",
+    "축산물 이력제",
+    "가금 전반",
+    "계란 수급",
+    "낙농",
+    "산란계",
+    "양돈",
+    "육계",
+    "육우",
+    "젖소",
+    "축산업 전반",
+    "곡물엘리베이터",
+    "배합사료업체",
+    "사료공장",
+    "영양첨가업체",
+    "조사료",
+    "프리믹스",
+    "동물용의약품",
+    "무항생제 사료",
+    "사료관리법",
+    "사료보충제",
+    "사료첨가제",
+    "사료효소",
+    "피타아제",
+    "항생제 사용 저감",
+    "항생제 성장촉진제",
+    "축산물 할당관세",
+    "계약사육",
+    "계열주체",
+    "계열화 기업",
+    "계열화사업법",
+    "생산비 보장",
+    "축산업 계열화",
+    "스마트축사",
+    "자동급여시스템",
+    "정밀축산",
+    "축산 빅데이터",
+    "축산 자동화",
+]
 
 
 def _is_recent(published_at: str, days: int) -> bool:
@@ -101,8 +169,8 @@ def search_naver_news(keyword: str, client_id: str, client_secret: str, start: i
                        session: requests.Session | None = None) -> list[dict]:
     """네이버 뉴스 검색 API 호출 -> 공통 스키마로 변환해 반환."""
     headers = {
-        "X-Naver-Client-Id": client_id,
-        "X-Naver-Client-Secret": client_secret,
+        "X-NCP-APIGW-API-KEY-ID": client_id,
+        "X-NCP-APIGW-API-KEY": client_secret,
     }
 
     params = {
