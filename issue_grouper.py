@@ -12,6 +12,8 @@ from itertools import combinations
 
 import requests
 
+import llm_model_guard
+
 import scorer  # 4차 병합 그룹 재스코어링용
 
 from keyword_tagger import EXCLUDED_TERMS  # 1차 매칭 제외어, keyword_tagger와 기준 통일
@@ -372,7 +374,7 @@ def _request_openrouter(system_prompt: str, user_prompt: str, api_key: str,
     resp = session.post(LLM_API_URL_OPENROUTER, headers=headers, json=body, timeout=30)
     resp.raise_for_status()
     data = resp.json()
-    return data["choices"][0]["message"]["content"].strip()
+    return llm_model_guard.extract_content(data)
 
 
 def _request_llm_text(system_prompt: str, user_prompt: str, api_key: str, session: requests.Session,
@@ -382,7 +384,7 @@ def _request_llm_text(system_prompt: str, user_prompt: str, api_key: str, sessio
     최종 안전망까지 실패하면 예외를 그대로 올림.
     validate(text, is_final) 콜백을 넘기면 응답 형식 이상도 재시도 대상으로 취급.
     """
-    chain = _LLM_MODEL_CHAIN_OPENROUTER_ROLES
+    chain = llm_model_guard.live_chain(_LLM_MODEL_CHAIN_OPENROUTER_ROLES)
     last_error: Exception | None = None
     for idx, (role, model_name) in enumerate(chain):
         is_final = idx == len(chain) - 1
@@ -394,6 +396,7 @@ def _request_llm_text(system_prompt: str, user_prompt: str, api_key: str, sessio
             return validate(text, is_final) if validate else text
         except Exception as e:
             last_error = e
+            llm_model_guard.report_failure(model_name, e, "issue_grouper")
             code = _LLM_MODEL_ROLE_ERROR_CODE[role]
             level = "🔴 조치필요" if is_final else "🟡 주의"
             next_note = "더 시도할 모델 없음 - 이 배치 전체 '안 묶음' fallback" if is_final else "다음 후보 모델로 재시도"

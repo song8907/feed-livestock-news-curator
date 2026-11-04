@@ -11,6 +11,8 @@ import time
 
 import requests
 
+import llm_model_guard
+
 LLM_PROVIDER = "openrouter"  # 로그 표시용 고정값(더 이상 스위치 아님, OpenRouter만 사용)
 
 LLM_MODEL_OPENROUTER = os.environ.get("OPENROUTER_MODEL") or "openrouter/free"
@@ -182,7 +184,7 @@ def _request_openrouter(system_prompt: str, user_prompt: str, api_key: str,
     resp = session.post(LLM_API_URL_OPENROUTER, headers=headers, json=body, timeout=30)
     resp.raise_for_status()
     data = resp.json()
-    return data["choices"][0]["message"]["content"].strip()
+    return llm_model_guard.extract_content(data)
 
 
 def _request_llm_text(system_prompt: str, user_prompt: str, api_key: str, session: requests.Session,
@@ -190,7 +192,7 @@ def _request_llm_text(system_prompt: str, user_prompt: str, api_key: str, sessio
     """
     모델 체인(1~3순위 -> 최종 안전망) 순으로 재시도(RF-01~10). validate 콜백 넘기면 형식 이상도 재시도 대상으로 취급.
     """
-    chain = _LLM_MODEL_CHAIN_OPENROUTER_ROLES
+    chain = llm_model_guard.live_chain(_LLM_MODEL_CHAIN_OPENROUTER_ROLES)
     last_error: Exception | None = None
     for idx, (role, model_name) in enumerate(chain):
         is_final = idx == len(chain) - 1
@@ -202,6 +204,7 @@ def _request_llm_text(system_prompt: str, user_prompt: str, api_key: str, sessio
             return validate(text, is_final) if validate else text
         except Exception as e:
             last_error = e
+            llm_model_guard.report_failure(model_name, e, "relevance_filter")
             code = _LLM_MODEL_ROLE_ERROR_CODE[role]
             level = "🔴 조치필요" if is_final else "🟡 주의"
             next_note = "더 시도할 모델 없음 - 이 배치 전체 안전 처리" if is_final else "다음 후보 모델로 재시도"

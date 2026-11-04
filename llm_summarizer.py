@@ -12,6 +12,8 @@ import re
 import time
 
 import requests
+
+import llm_model_guard
 import trafilatura
 from trafilatura.settings import use_config as _trafilatura_use_config
 
@@ -137,7 +139,7 @@ def _request_openrouter(system_prompt: str, user_prompt: str, api_key: str,
     resp = session.post(_ig.LLM_API_URL_OPENROUTER, headers=headers, json=body, timeout=30)
     resp.raise_for_status()
     data = resp.json()
-    return data["choices"][0]["message"]["content"].strip(), data
+    return llm_model_guard.extract_content(data), data
 
 
 def _call_llm(system_prompt: str, user_prompt: str, api_key: str, session: requests.Session) -> str | None:
@@ -147,7 +149,7 @@ def _call_llm(system_prompt: str, user_prompt: str, api_key: str, session: reque
     """
     data = None
     try:
-        chain = _LLM_MODEL_CHAIN_SUMMARY_ROLES
+        chain = llm_model_guard.live_chain(_LLM_MODEL_CHAIN_SUMMARY_ROLES)
         role_codes = {"1순위": "LS-01", "2순위": "LS-02", "3순위": "LS-03", "최종 안전망": "LS-04"}
         last_error: Exception | None = None
         for idx, (role, model_name) in enumerate(chain):
@@ -161,6 +163,7 @@ def _call_llm(system_prompt: str, user_prompt: str, api_key: str, session: reque
                 return text
             except Exception as e:
                 last_error = e
+                llm_model_guard.report_failure(model_name, e, "llm_summarizer")
                 code = role_codes[role]
                 is_final = idx == len(chain) - 1
                 level = "🔴 조치필요" if is_final else "🟡 주의"
