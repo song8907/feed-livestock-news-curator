@@ -9,3 +9,9 @@ venv/
 
 # OS
 .DS_Store
+
+# job2 -> job3 배포용 중간 결과(artifact로만 전달, 커밋 안 함)
+deploy_checkpoint.pkl
+deploy_checkpoint.pkl.tmp
+deploy_articles.pkl
+deploy_articles.pkl.tmp

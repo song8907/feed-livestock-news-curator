@@ -35,6 +35,7 @@ import category_aggregator
 import relevance_filter
 import storage
 import deploy
+import deploy_stage
 
 # 국내/해외 Top N, 카테고리별 Top N. 환경변수로 조정 가능(기본 3/1).
 TOP_N = int(os.environ.get("TOP_N") or 3)
@@ -53,12 +54,37 @@ GROUPING_DEADLINE_MINUTES = 120      # 2:00 - job2: 임베딩 로드 + 이슈 �
 RELEVANCE_DEADLINE_MINUTES = 220      # 3:40 - job2: [5] 관련성 필터 (그룹 대표 1건씩만 판단)
 RECATEGORIZE_DEADLINE_MINUTES = 240   # 4:00 - job2: [6] 카테고리 재분류 (별도 체크포인트 - [5]가 늦어도 20분은 보장됨)
 STAGE4_DEADLINE_MINUTES = 250         # 4:10 - job2: 4차 Top N 사후 재검토
-SUMMARY_DEADLINE_MINUTES = 350        # 5:50 - job2: LLM 요약 (남은 10분은 저장+PDF변환+이메일발송+git커밋용)
+SUMMARY_DEADLINE_MINUTES = 325        # 5:25 - job2: LLM 요약. 저장·PDF·메일·커밋은 job3(deploy)로 분리됨
+# 2026-11: job2 마감은 "파이썬 시작"이 아니라 "job 시작"(워크플로가 넘기는 JOB_STARTED_AT) 기준.
+#  - 예전엔 파이썬 전 셋업(툴 정리/PyTorch/pip/playwright/폰트/모델 캐시, 10~15분)이 빠져 있어서
+#    요약 마감 5:50이 실제로는 job 6:00~6:05가 됨 -> 11/22 회차 process가 6h0m 강제 종료, 메일 누락.
+#  - 처리 step 자체에도 timeout-minutes: 330(워크플로)을 걸어, 무엇이 멈춰도 job3가 중간 결과로 발송.
 
 
 def _deadline(pipeline_start: float, minutes: int) -> float:
     """파이프라인 시작 시각(time.monotonic() 기준) + 목표 분을 절대 마감 시각으로 변환."""
     return pipeline_start + minutes * 60
+
+
+def _job_start_monotonic() -> float:
+    """GitHub Actions job 시작 시각(JOB_STARTED_AT, epoch 초)을 time.monotonic() 기준으로 환산.
+    없거나 이상하면(로컬 실행 등) 지금을 시작으로 봄."""
+    raw = os.environ.get("JOB_STARTED_AT")
+    try:
+        elapsed = time.time() - float(raw)
+        if 0 <= elapsed < 6 * 60 * 60:
+            print(f"[main] 시간 예산 기준: job 시작 시각(파이썬 시작 전 셋업에 이미 {elapsed / 60:.1f}분 사용)")
+            return time.monotonic() - elapsed
+    except (TypeError, ValueError):
+        pass
+    print("[main] 시간 예산 기준: 파이썬 시작 시각(JOB_STARTED_AT 없음)")
+    return time.monotonic()
+
+
+def _mark_skipped(items: list[dict]) -> list[dict]:
+    """아직 요약 안 된 항목 - 배포 시 '요약 생략(시간 관계상)'으로 보이게 사유를 채운 복사본."""
+    return [{**dict(item), "generated_title": None, "summary": None,
+             "summary_skipped_reason": "시간 관계상 생략"} for item in items]
 
 
 def _save_collected(articles: list[dict], gdelt_timeline: dict, failed_sources: list[str],
@@ -238,7 +264,7 @@ def _regroup_by_category(items: list[dict]) -> dict[str, list[dict]]:
 
 def step4_category_llm_summary(domestic_category_ranked: dict[str, list[dict]],
                                 international_category_ranked: dict[str, list[dict]],
-                                deadline: float | None = None,
+                                deadline: float | None = None, on_progress=None,
                                 ) -> tuple[dict[str, list[dict]], dict[str, list[dict]]]:
     """카테고리별 Top N에 (A)/(A-1) 요약 적용. 평평한 리스트로 합쳐 처리 후 재구성.
     deadline은 국내/해외 LLM 요약(step4_llm_summary)과 같은 파이프라인 기준 절대 마감을 그대로 씀 - 둘 다 [9]/[10] 단계에서 같은 예산을 나눠 쓰는 셈."""
@@ -246,9 +272,11 @@ def step4_category_llm_summary(domestic_category_ranked: dict[str, list[dict]],
     international_flat = [item for items in international_category_ranked.values() for item in items]
 
     domestic_summarized_flat = llm_summarizer.summarize_top_issues(
-        domestic_flat, label="국내-카테고리", deadline=deadline)
+        domestic_flat, label="국내-카테고리", deadline=deadline,
+        on_progress=on_progress("domestic_cat", domestic_flat) if on_progress else None)
     international_summarized_flat = llm_summarizer.summarize_top_issues(
-        international_flat, label="해외-카테고리", deadline=deadline)
+        international_flat, label="해외-카테고리", deadline=deadline,
+        on_progress=on_progress("international_cat", international_flat) if on_progress else None)
 
     return (_regroup_by_category(domestic_summarized_flat),
             _regroup_by_category(international_summarized_flat))
@@ -256,12 +284,16 @@ def step4_category_llm_summary(domestic_category_ranked: dict[str, list[dict]],
 
 def step4_llm_summary(domestic_ranked: list[dict],
                        international_ranked: list[dict],
-                       deadline: float | None = None) -> tuple[list[dict], list[dict]]:
+                       deadline: float | None = None, on_progress=None) -> tuple[list[dict], list[dict]]:
     """국내/해외 Top N에 (A)/(A-1) 요약 적용. 반환값은 summary 필드 추가된 동일 형태.
-    deadline: 파이프라인 기준 절대 마감(SUMMARY_DEADLINE_MINUTES)."""
-    domestic_summarized = llm_summarizer.summarize_top_issues(domestic_ranked, label="국내", deadline=deadline)
+    deadline: 파이프라인 기준 절대 마감(SUMMARY_DEADLINE_MINUTES).
+    on_progress(key, base_items) -> 콜백: 요약 1건마다 배포용 중간 결과 갱신(main 본체가 넘김)."""
+    domestic_summarized = llm_summarizer.summarize_top_issues(
+        domestic_ranked, label="국내", deadline=deadline,
+        on_progress=on_progress("domestic", domestic_ranked) if on_progress else None)
     international_summarized = llm_summarizer.summarize_top_issues(
-        international_ranked, label="해외", deadline=deadline)
+        international_ranked, label="해외", deadline=deadline,
+        on_progress=on_progress("international", international_ranked) if on_progress else None)
     return domestic_summarized, international_summarized
 
 
@@ -333,7 +365,7 @@ def _extract_error_codes(text: str) -> list[str]:
 
 
 def _process_and_deploy(articles: list[dict], gdelt_timeline: dict, failed_sources: list[str],
-                         pipeline_start: float) -> None:
+                         pipeline_start: float, deploy_now: bool = True) -> None:
     """
     [2] 정규화 ~ [12] 배포 전체. run_process()와 run()이 공유하는 본체 - pipeline_start만 호출부가 정해서 넘겨준다.
 
@@ -343,13 +375,13 @@ def _process_and_deploy(articles: list[dict], gdelt_timeline: dict, failed_sourc
     tee = _ErrorCodeTee(sys.stdout)
     sys.stdout = tee
     try:
-        _run_process_and_deploy_body(articles, gdelt_timeline, failed_sources, pipeline_start, tee)
+        _run_process_and_deploy_body(articles, gdelt_timeline, failed_sources, pipeline_start, tee, deploy_now)
     finally:
         sys.stdout = tee._real
 
 
 def _run_process_and_deploy_body(articles: list[dict], gdelt_timeline: dict, failed_sources: list[str],
-                                  pipeline_start: float, _tee: "_ErrorCodeTee") -> None:
+                                  pipeline_start: float, _tee: "_ErrorCodeTee", deploy_now: bool = True) -> None:
     print("\n=== [2] 정규화 ===")
     try:
         articles = normalize(articles)
@@ -427,12 +459,40 @@ def _run_process_and_deploy_body(articles: list[dict], gdelt_timeline: dict, fai
               f"{type(e).__name__} - {e!r}")
         category_distribution, category_comparison, weekly_trend = {}, None, []
 
+    # --- 배포용 중간 결과(체크포인트) - 순위 확정 직후부터 요약 1건마다 덮어씀 ---
+    # job2가 어디서 잘려도 job3(deploy_stage.py)가 가장 최근 상태로 저장·메일 발송.
+    deploy_stage.write_articles(articles)
+    ckpt = {
+        "stage": "ranked", "ranked": True, "complete": False,
+        "domestic": _mark_skipped(domestic_ranked), "international": _mark_skipped(international_ranked),
+        "domestic_cat": {c: _mark_skipped(v) for c, v in domestic_category_ranked.items()},
+        "international_cat": {c: _mark_skipped(v) for c, v in international_category_ranked.items()},
+        "failed_sources": failed_sources, "gdelt_timeline": gdelt_timeline,
+        "category_distribution": category_distribution, "category_comparison": category_comparison,
+        "weekly_trend": weekly_trend, "error_codes": [],
+    }
+
+    def _checkpoint(**updates) -> None:
+        ckpt.update(updates)
+        ckpt["error_codes"] = _extract_error_codes("".join(_tee.buffer))
+        deploy_stage.write_checkpoint(ckpt)
+
+    def _progress_factory(key: str, base_items: list[dict]):
+        def _cb(partial: list[dict]) -> None:
+            merged = list(partial) + _mark_skipped(base_items[len(partial):])
+            if key.endswith("_cat"):
+                merged = _regroup_by_category(merged)
+            _checkpoint(stage=f"summary:{key}", **{key: merged})
+        return _cb
+
+    _checkpoint()
+
     summary_deadline = _deadline(pipeline_start, SUMMARY_DEADLINE_MINUTES)
 
     print("\n=== [9] 국내/해외 LLM 요약 생성 ===")
     try:
         domestic_summarized, international_summarized = step4_llm_summary(
-            domestic_ranked, international_ranked, deadline=summary_deadline)
+            domestic_ranked, international_ranked, deadline=summary_deadline, on_progress=_progress_factory)
         llm_summarizer.print_summaries("국내", domestic_summarized)
         llm_summarizer.print_summaries("해외", international_summarized)
     except Exception as e:
@@ -442,8 +502,10 @@ def _run_process_and_deploy_body(articles: list[dict], gdelt_timeline: dict, fai
 
     print("\n=== [10] 카테고리별 LLM 요약 생성 ===")
     try:
+        _checkpoint(stage="summary:main_done", domestic=domestic_summarized, international=international_summarized)
         domestic_category_summarized, international_category_summarized = step4_category_llm_summary(
-            domestic_category_ranked, international_category_ranked, deadline=summary_deadline)
+            domestic_category_ranked, international_category_ranked, deadline=summary_deadline,
+            on_progress=_progress_factory)
         for category, items in domestic_category_summarized.items():
             llm_summarizer.print_summaries(f"국내-{category}", items)
         for category, items in international_category_summarized.items():
@@ -463,42 +525,15 @@ def _run_process_and_deploy_body(articles: list[dict], gdelt_timeline: dict, fai
         print(f"[main] 🟡 주의 [MN-13] - cross_axis_partner 최종 확정 단계에서 예상 못 한 오류 발생 - "
               f"이번 실행은 🔗 표시 없이 진행(다른 내용엔 영향 없음): {type(e).__name__} - {e!r}")
 
-    print("\n=== [11] 저장 ===")
-    # 수동 실행(workflow_dispatch)은 저장 생략 - 지난주 대비 증감 비교 기준 오염 방지
-    is_manual_run = os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch"
-    if is_manual_run:
-        print("[main] 수동 실행(workflow_dispatch)이라 저장을 건너뜁니다 - "
-              "'지난주 대비 증감' 비교 기준 오염 방지(콘솔에 출력된 이번 실행 결과는 "
-              "그대로 확인 가능, data/에는 안 남음)")
-        saved_dir = None
-    else:
-        try:
-            saved_dir = storage.save_week(articles, domestic_summarized, international_summarized,
-                                           domestic_category_summarized, international_category_summarized,
-                                           gdelt_timeline, failed_sources, category_distribution,
-                                           category_comparison)
-        except Exception as e:
-            print(f"[main] 🔴 조치필요 [MN-14] - 저장 단계에서 예상 못 한 오류 발생(콘솔 로그의 결과는 그대로 유효함): "
-                  f"{type(e).__name__} - {e!r}")
-            saved_dir = None
-    print("\n=== [12] 배포 ===")
-    try:
-        week_label = os.path.basename(saved_dir) if saved_dir else datetime.now(timezone.utc).strftime("%G-%V")
-        # 지금까지([2]~[11]) 찍힌 로그에서 🔴 조치필요 코드만 추출 - 이메일 하단에 코드만 조용히 표시(deploy.py가 PDF에는 안 넣음).
-        # 아래 MN-15(배포 실패)은 이 시점 이후 발생이라 이번 이메일 자체엔 반영 안 됨.
-        # - 그건 다음 실행 로그를 사람이 직접 봐야 하는 성격의 실패라 괜찮음.
-        error_codes = _extract_error_codes("".join(_tee.buffer))
-        deploy.send_weekly_email(week_label, domestic_summarized, international_summarized,
-                                  domestic_category_summarized, international_category_summarized,
-                                  failed_sources, category_comparison, weekly_trend, error_codes)
-    except Exception as e:
-        print(f"[main] 🔴 조치필요 [MN-15] - 배포 단계에서 예상 못 한 오류 발생(콘솔 로그의 결과는 그대로 유효함): "
-              f"{type(e).__name__} - {e!r}")
+    _checkpoint(stage="complete", complete=True,
+                domestic=domestic_summarized, international=international_summarized,
+                domestic_cat=domestic_category_summarized, international_cat=international_category_summarized)
 
-    if failed_sources:
-        saved_dir_note = f"{saved_dir}/scored.json에도" if saved_dir else "(data/ 파일에는 안 남았지만)"
-        print(f"\n[main] 🔴 조치필요 [MN-16] - 이번 실행 실패 소스: {failed_sources} "
-              f"({saved_dir_note} failed_sources로 같이 저장됨)")
+    if deploy_now:
+        # 로컬 단일 실행(run()) - 같은 프로세스에서 바로 저장·배포
+        deploy_stage.save_and_deploy(ckpt, articles)
+    else:
+        print("\n[main] 처리 완료 - [11] 저장·[12] 배포는 deploy job(deploy_stage.py)이 이어서 실행")
 
 
 # ---------------------------------------------------------------------------
@@ -516,9 +551,9 @@ def run_collect() -> None:
 def run_process() -> None:
     """job2(정규화~배포) 진입점. job1이 저장한 결과를 이어받아 [2]~[12] 전부 처리.
     pipeline_start를 이 함수 시작 시점으로 새로 잡음 - job2가 자기 몫의 360분을 통째로 받으므로, job1이 얼마나 걸렸는지와 무관하게 여기서부터 새로 잰다."""
-    pipeline_start = time.monotonic()
+    pipeline_start = _job_start_monotonic()
     articles, gdelt_timeline, failed_sources = _load_collected()
-    _process_and_deploy(articles, gdelt_timeline, failed_sources, pipeline_start)
+    _process_and_deploy(articles, gdelt_timeline, failed_sources, pipeline_start, deploy_now=False)
 
 
 def run() -> None:

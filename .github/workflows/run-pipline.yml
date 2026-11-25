@@ -77,12 +77,16 @@ jobs:
           retention-days: 1
 
   process:
-    # [2]~[6] 정규화~배포. job1 완료 후 시작, 자기 몫 360분 새로 받음.
+    # [2]~[10] 정규화~요약. job1 완료 후 시작, 자기 몫 360분 새로 받음.
+    # 저장·메일은 job3(deploy)로 분리 - 여기서 시간 초과로 잘려도 중간 결과로 메일은 나감.
     needs: collect
     runs-on: ubuntu-latest
     timeout-minutes: 360
 
     steps:
+      - name: 작업 시작 시각 기록 (main.py 시간 예산 기준)
+        run: echo "JOB_STARTED_AT=$(date +%s)" >> "$GITHUB_ENV"
+
       - name: 리포 체크아웃
         uses: actions/checkout@v4
 
@@ -130,7 +134,9 @@ jobs:
           path: ~/.cache/huggingface
           key: bge-m3-model
 
-      - name: 처리+배포 실행 (main.py process)
+      - name: 처리 실행 (main.py process)
+        # 셋업(10~15분) + 330분 < 360분 - job이 통째로 죽기 전에 이 step만 멈추고 아래 업로드가 돌게 함
+        timeout-minutes: 330
         env:
           KEYWORD_SHEET_CSV_URL: ${{ vars.KEYWORD_SHEET_CSV_URL }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
@@ -145,10 +151,18 @@ jobs:
           TOP_N: ${{ vars.TOP_N }}
           CATEGORY_TOP_N: ${{ vars.CATEGORY_TOP_N }}
           SIMILARITY_DEBUG_CSV: ${{ vars.SIMILARITY_DEBUG_CSV }}
-          SMTP_USER: ${{ secrets.SMTP_USER }}
-          SMTP_APP_PASSWORD: ${{ secrets.SMTP_APP_PASSWORD }}
-          EMAIL_RECIPIENTS: ${{ secrets.EMAIL_RECIPIENTS }}
         run: python -u main.py process
+
+      - name: 배포용 중간 결과 업로드 (deploy Job이 이어받음)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deploy-checkpoint-${{ github.run_id }}
+          path: |
+            deploy_checkpoint.pkl
+            deploy_articles.pkl
+          if-no-files-found: warn
+          retention-days: 3
 
       - name: 유사도 디버그 CSV 업로드
         if: always()
@@ -158,6 +172,49 @@ jobs:
           path: similarity_debug/similarity_scores.csv
           if-no-files-found: warn
           retention-days: 14
+
+  deploy:
+    # [11] 저장 ~ [12] 메일. process가 성공하든 시간 초과로 멈추든 항상 실행(수집이 성공했을 때).
+    needs: [collect, process]
+    if: ${{ always() && needs.collect.result == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: 리포 체크아웃
+        uses: actions/checkout@v4
+
+      - name: 수집 결과 받기 (중간 결과가 없을 때 실패 안내용)
+        uses: actions/download-artifact@v4
+        with:
+          name: collected-articles-${{ github.run_id }}
+
+      - name: 배포용 중간 결과 받기
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: deploy-checkpoint-${{ github.run_id }}
+
+      - name: Python 3.11 설치
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 배포 의존성 설치 (PDF/그래프/메일만 - PyTorch 등 불필요)
+        run: pip install playwright matplotlib --no-cache-dir
+
+      - name: Playwright 브라우저(Chromium) 설치
+        run: playwright install --with-deps chromium
+
+      - name: 한글 폰트(나눔고딕) 설치
+        run: sudo apt-get install -y fonts-nanum
+
+      - name: 저장+배포 실행 (deploy_stage.py)
+        env:
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_APP_PASSWORD: ${{ secrets.SMTP_APP_PASSWORD }}
+          EMAIL_RECIPIENTS: ${{ secrets.EMAIL_RECIPIENTS }}
+        run: python -u deploy_stage.py
 
       - name: 저장 결과물(data/, state/) 커밋 & 푸시
         run: |

@@ -427,10 +427,11 @@ def summarize_issue(item: dict, session: requests.Session | None = None) -> dict
 
 
 def summarize_top_issues(ranked_items: list[dict], label: str = "",
-                          deadline: float | None = None) -> list[dict]:
+                          deadline: float | None = None, on_progress=None) -> list[dict]:
     """
     ranked_items 전체에 summarize_issue 적용. 항목마다 즉시 로그 출력.
     deadline 넘으면 남은 항목은 "시간 예산 초과" 사유로 채워서 반환(기존 summary_skipped_reason 경로로 그대로 흡수).
+    on_progress(results_so_far): 1건 끝날 때마다 호출 - main.py가 배포용 중간 결과를 덮어쓰는 데 씀.
     """
     results = []
     total = len(ranked_items)
@@ -461,6 +462,11 @@ def summarize_top_issues(ranked_items: list[dict], label: str = "",
                 print(f"{prefix}({i}/{total}) 요약 생략 - {result.get('summary_skipped_reason', '사유 불명')}")
 
             results.append(result)
+            if on_progress is not None:
+                try:
+                    on_progress(results)
+                except Exception as e:  # 중간 저장 실패가 요약을 막으면 안 됨
+                    print(f"{prefix}🟡 주의 - 중간 결과 저장 콜백 실패(요약은 계속): {type(e).__name__} - {e!r}")
     return results
 
 
